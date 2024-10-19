@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Feedback;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class Pet : MonoBehaviour
 {
@@ -22,6 +25,7 @@ public class Pet : MonoBehaviour
     public int love;
 
     Animator animator;
+    XRSimpleInteractable XR_interactable;
 
     private bool initiliazed = false;
 
@@ -34,6 +38,26 @@ public class Pet : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         InitializeData();
+    }
+
+    private void OnEnable()
+    {
+        if (!XR_interactable)
+        {
+            XR_interactable = GetComponentInChildren<XRSimpleInteractable>();
+        }
+        if (XR_interactable)
+        {
+            XR_interactable.selectEntered.AddListener(Love);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (XR_interactable)
+        {
+            XR_interactable.selectEntered?.RemoveListener(Love);
+        }
     }
 
     private void InitializeData()
@@ -77,10 +101,11 @@ public class Pet : MonoBehaviour
     }
 
     [ContextMenu("Pet")]
-    public void Love()
+    private void Love(SelectEnterEventArgs xr_event)
     {
         love = Mathf.Clamp(love + 1, 0, maxLove);
         OnLove?.Invoke(love, maxLove);
+        animator.SetInteger("AnimationID", 7);
     }
 
     private void LookAt(GameObject obj)
@@ -101,4 +126,5 @@ public class Pet : MonoBehaviour
             food.Eat(this);
         }
     }
+
 }
