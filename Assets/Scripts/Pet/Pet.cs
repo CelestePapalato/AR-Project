@@ -20,6 +20,12 @@ public class Pet : MonoBehaviour
     [SerializeField]
     private int maxLove;
     [SerializeField]
+    private int petCount;
+    [SerializeField]
+    private int maxPettingCount;
+    [SerializeField]
+    private float pettingCooldown;
+    [SerializeField]
     public int feed;
     [SerializeField]
     public int love;
@@ -31,8 +37,11 @@ public class Pet : MonoBehaviour
 
     private bool isEating = false;
 
+    private bool cleaningPetCount = false;
+
     public UnityAction<int, int> OnFeed;
     public UnityAction<int, int> OnLove;
+    public UnityAction<int> OnPet;
 
     private void Start()
     {
@@ -74,6 +83,8 @@ public class Pet : MonoBehaviour
         }
         maxFeed = petData.MaxFeed;
         maxLove = petData.MaxLove;
+        maxPettingCount = petData.MaxPettingCount;
+        pettingCooldown = petData.PettingCooldown;
     }
 
     [ContextMenu("Feed")]
@@ -103,9 +114,26 @@ public class Pet : MonoBehaviour
     [ContextMenu("Pet")]
     private void Love(SelectEnterEventArgs xr_event)
     {
+        if(petCount >= maxPettingCount) { return; }
         love = Mathf.Clamp(love + 1, 0, maxLove);
         OnLove?.Invoke(love, maxLove);
         animator.SetInteger("AnimationID", 7);
+        petCount++;
+        if (!cleaningPetCount)
+        {
+            StartCoroutine(PetCountCleaner());
+        }
+    }
+
+    private IEnumerator PetCountCleaner()
+    {
+        cleaningPetCount = true;
+        while(petCount > 0)
+        {
+            yield return new WaitForSeconds(pettingCooldown);
+            petCount = Math.Max(petCount - 1, 0);
+        }
+        cleaningPetCount = false;
     }
 
     private void LookAt(GameObject obj)

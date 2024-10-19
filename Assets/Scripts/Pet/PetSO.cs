@@ -7,6 +7,6 @@ public class PetSO : ScriptableObject
 {
     public int MaxFeed;
     public int MaxLove;
-    public float MaxPettingCount;
+    public int MaxPettingCount;
     public float PettingCooldown;
 }
