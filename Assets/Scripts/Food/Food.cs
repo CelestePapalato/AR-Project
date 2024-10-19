@@ -50,8 +50,8 @@ public class Food : MonoBehaviour
             Debug.LogWarning("No food Data available");
         }
         foodData = food;
-        feedPoints = foodData.feedPoints;
-        lovePoints = foodData.lovePoints;
+        feedPoints = foodData.FeedPoints;
+        lovePoints = foodData.LovePoints;
     }
 
     public void Eat(Pet pet)

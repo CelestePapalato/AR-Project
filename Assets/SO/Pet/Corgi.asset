@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 613d6dead5fb97a4c91865f6c5111f67, type: 3}
-  m_Name: Example
+  m_Script: {fileID: 11500000, guid: 0085395f0b5ff1a4588f1efaa24f638b, type: 3}
+  m_Name: Corgi
   m_EditorClassIdentifier: 
-  FeedPoints: 7
-  LovePoints: 3
-  EatingTime: 3
+  MaxFeed: 50
+  MaxLove: 50
