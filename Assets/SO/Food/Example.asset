@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   feedPoints: 5
   lovePoints: 2
+  eatingTime: 3
   prefab: {fileID: 1261644350505640180, guid: 362679ac8557f4c4683e46b47cce7ad5, type: 3}

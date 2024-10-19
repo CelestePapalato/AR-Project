@@ -9,6 +9,7 @@ public class Food : MonoBehaviour
 {
     [SerializeField]
     FoodSO foodData;
+    public FoodSO Data { get => foodData; }
 
     [Header("DEBUG")]
     [SerializeField]
@@ -18,6 +19,9 @@ public class Food : MonoBehaviour
 
     [System.Obsolete]
     private MaterialPropertyBlockHelper materialHelper;
+    private Rigidbody rb;
+    private Collider col;
+    private XRGrabInteractable xr_interactable;
 
     bool initialized = false;
 
@@ -29,6 +33,9 @@ public class Food : MonoBehaviour
             return;
         }
         InitializeData(foodData);
+        rb = GetComponent<Rigidbody>();
+        col = GetComponentInChildren<Collider>();
+        xr_interactable = GetComponent<XRGrabInteractable>();
     }
 
     public void InitializeData(FoodSO food)
@@ -47,10 +54,12 @@ public class Food : MonoBehaviour
         lovePoints = foodData.lovePoints;
     }
 
-    public void Feed(Pet pet)
+    public void Eat(Pet pet)
     {
-        pet.Feed(foodData);
-        Destroy(gameObject);
+        rb.isKinematic = true;
+        col.isTrigger = true;
+        xr_interactable.enabled = false;
+        pet.Feed(this);
     }
 
 }

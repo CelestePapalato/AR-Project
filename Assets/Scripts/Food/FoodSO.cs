@@ -7,5 +7,5 @@ public class FoodSO : ScriptableObject
 {
     public int feedPoints;
     public int lovePoints;
-    public GameObject prefab;
+    public float eatingTime;
 }
