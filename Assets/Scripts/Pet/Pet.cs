@@ -27,4 +27,13 @@ public class Pet : MonoBehaviour
     {
         love = Mathf.Clamp(love + 1, 0, maxLove);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Food"))
+        {
+            Food food = collision.gameObject.GetComponent<Food>();
+            food.Feed(this);
+        }
+    }
 }
