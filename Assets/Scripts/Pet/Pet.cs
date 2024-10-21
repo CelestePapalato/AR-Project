@@ -15,14 +15,6 @@ public class Pet : MonoBehaviour
     PetSO petData;
     public PetSO Data {get => petData; }
 
-    [Header("Debug")]
-    [SerializeField]
-    private int petCount;
-    [SerializeField]
-    private int maxPettingCount;
-    [SerializeField]
-    private float pettingCooldown;
-
     Animator animator;
     XRSimpleInteractable XR_interactable;
     PetStats stats;
@@ -30,8 +22,6 @@ public class Pet : MonoBehaviour
     private bool initialiazed = false;
 
     private bool isEating = false;
-
-    private bool cleaningPetCount = false;
 
     public UnityAction<int> OnFeed;
     public UnityAction<int> OnLove;
@@ -76,8 +66,6 @@ public class Pet : MonoBehaviour
             Debug.LogWarning("No pet data available");
             return;
         }
-        maxPettingCount = petData.MaxPettingCount;
-        pettingCooldown = petData.PettingCooldown;
     }
 
     [ContextMenu("Feed")]
@@ -107,28 +95,14 @@ public class Pet : MonoBehaviour
     [ContextMenu("Pet")]
     private void Love(SelectEnterEventArgs xr_event)
     {
-        if(petCount >= maxPettingCount) { return; }
+        if(stats.Petting.isMax) { return; }
         stats.Love.Value += petData.pettingLovePoints;
         OnLove?.Invoke(petData.pettingLovePoints);
         OnPet?.Invoke(petData.pettingLovePoints);
         animator.SetInteger("AnimationID", 7);
-        petCount++;
-        if (!cleaningPetCount)
-        {
-            StartCoroutine(PetCountCleaner());
-        }
+        stats.Petting.Value += 1;
     }
 
-    private IEnumerator PetCountCleaner()
-    {
-        cleaningPetCount = true;
-        while(petCount > 0)
-        {
-            yield return new WaitForSeconds(pettingCooldown);
-            petCount = Math.Max(petCount - 1, 0);
-        }
-        cleaningPetCount = false;
-    }
 
     private void LookAt(GameObject obj)
     {
