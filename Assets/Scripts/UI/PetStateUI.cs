@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PetStateUI : MonoBehaviour
 {
     [SerializeField]
-    Pet pet;
+    PetStats pet;
 
     [Header("UI")]
     [SerializeField]
@@ -18,8 +18,8 @@ public class PetStateUI : MonoBehaviour
     {
         if(pet != null)
         {
-            pet.OnFeed += UpdateFeed;
-            pet.OnLove += UpdateLove;
+            pet.Feed.OnUpdate += UpdateFeed;
+            pet.Love.OnUpdate += UpdateLove;
         }
     }
 
@@ -27,17 +27,17 @@ public class PetStateUI : MonoBehaviour
     {
         if(pet != null)
         {
-            pet.OnFeed -= UpdateFeed;
-            pet.OnLove -= UpdateLove;
+            pet.Feed.OnUpdate -= UpdateFeed;
+            pet.Love.OnUpdate -= UpdateLove;
         }
     }
 
-    private void UpdateLove(int love, int maxLove)
+    private void UpdateLove(int love, int minLove, int maxLove)
     {
         loveSlider.value = (float) love/maxLove;
     }
 
-    private void UpdateFeed(int feed, int maxFeed)
+    private void UpdateFeed(int feed, int minFeed, int maxFeed)
     {
         feedSlider.value = (float) feed/maxFeed;
     }

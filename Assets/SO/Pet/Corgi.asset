@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Corgi
   m_EditorClassIdentifier: 
   MaxFeed: 50
+  FeedDecreaseRate: 15
+  FeedDecreaseValue: 2
   MaxLove: 50
+  LoveDecreaseRate: 15
+  LoveDecreaseValue: 2
+  pettingLovePoints: 2
   MaxPettingCount: 7
   PettingCooldown: 15

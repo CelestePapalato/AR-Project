@@ -8,6 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Feedback;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
+[RequireComponent(typeof(PetStats))]
 public class Pet : MonoBehaviour
 {
     [SerializeField]
@@ -16,36 +17,30 @@ public class Pet : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField]
-    private int maxFeed;
-    [SerializeField]
-    private int maxLove;
-    [SerializeField]
     private int petCount;
     [SerializeField]
     private int maxPettingCount;
     [SerializeField]
     private float pettingCooldown;
-    [SerializeField]
-    public int feed;
-    [SerializeField]
-    public int love;
 
     Animator animator;
     XRSimpleInteractable XR_interactable;
+    PetStats stats;
 
-    private bool initiliazed = false;
+    private bool initialiazed = false;
 
     private bool isEating = false;
 
     private bool cleaningPetCount = false;
 
-    public UnityAction<int, int> OnFeed;
-    public UnityAction<int, int> OnLove;
+    public UnityAction<int> OnFeed;
+    public UnityAction<int> OnLove;
     public UnityAction<int> OnPet;
 
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        stats = GetComponent<PetStats>();
         InitializeData();
     }
 
@@ -71,7 +66,7 @@ public class Pet : MonoBehaviour
 
     private void InitializeData()
     {
-        if(initiliazed)
+        if(initialiazed)
         {
             Debug.LogWarning("Pet data already initialized");
             return;
@@ -81,8 +76,6 @@ public class Pet : MonoBehaviour
             Debug.LogWarning("No pet data available");
             return;
         }
-        maxFeed = petData.MaxFeed;
-        maxLove = petData.MaxLove;
         maxPettingCount = petData.MaxPettingCount;
         pettingCooldown = petData.PettingCooldown;
     }
@@ -102,21 +95,22 @@ public class Pet : MonoBehaviour
         LookAt(food.gameObject);
         animator.SetInteger("AnimationID", 5);
         yield return new WaitForSeconds(food.Data.EatingTime);
-        feed = Mathf.Clamp(feed + food.Data.FeedPoints, 0, maxFeed);
-        love = Mathf.Clamp(love + food.Data.LovePoints, 0, maxLove);
-        OnFeed?.Invoke(feed, maxFeed);
-        OnLove?.Invoke(love, maxLove);
+        stats.Feed.Value += food.Data.FeedPoints;
+        stats.Love.Value += food.Data.LovePoints;
         Destroy(food.gameObject);
         animator.SetInteger("AnimationID", 1);
         isEating = false;
+        OnFeed?.Invoke(food.Data.FeedPoints);
+        OnLove?.Invoke(food.Data.LovePoints);
     }
 
     [ContextMenu("Pet")]
     private void Love(SelectEnterEventArgs xr_event)
     {
         if(petCount >= maxPettingCount) { return; }
-        love = Mathf.Clamp(love + 1, 0, maxLove);
-        OnLove?.Invoke(love, maxLove);
+        stats.Love.Value += petData.pettingLovePoints;
+        OnLove?.Invoke(petData.pettingLovePoints);
+        OnPet?.Invoke(petData.pettingLovePoints);
         animator.SetInteger("AnimationID", 7);
         petCount++;
         if (!cleaningPetCount)
