@@ -95,7 +95,7 @@ public class Pet : MonoBehaviour
     [ContextMenu("Pet")]
     private void Love(SelectEnterEventArgs xr_event)
     {
-        if(stats.Petting.isMax) { return; }
+        if(stats.Petting.isMax || isEating) { return; }
         stats.Love.Value += petData.pettingLovePoints;
         OnLove?.Invoke(petData.pettingLovePoints);
         OnPet?.Invoke(petData.pettingLovePoints);
@@ -116,9 +116,7 @@ public class Pet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Food") && !isEating && !stats.Feed.isMax)
         {
-            collision.gameObject.GetComponent<Rigidbody>().detectCollisions = false;
             Food food = collision.gameObject.GetComponent<Food>();
-
             food.Eat(this);
         }
     }

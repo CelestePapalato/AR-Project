@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 6042367204251554896}
   - component: {fileID: 4750129540264950214}
   - component: {fileID: 5308663989006607476}
-  - component: {fileID: 2277830955285478355}
+  - component: {fileID: 481087848844500404}
   - component: {fileID: 6658315392312446830}
+  - component: {fileID: 177346907785525675}
   - component: {fileID: 969900557523048053}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mascot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +76,42 @@ MonoBehaviour:
     val: 0
     min_value: 0
     max_value: 0
---- !u!54 &2277830955285478355
+--- !u!114 &481087848844500404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4718485015021904391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a222ca7a7a09d2e4baba05c94ac1cc26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tolerableDistanceToGoal: 1
+--- !u!114 &6658315392312446830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4718485015021904391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b309761041ee54265b7f9a8c0f373dab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ObjectPlaneTranslationMode: 0
+  m_EnablePlaneClassificationFilter: 0
+  m_PlaneClassificationsList: 
+  m_UseInteractorOrientation: 0
+  m_MinScale: 0.25
+  m_MaxScale: 2
+  m_ScaleSensitivity: 0.75
+  m_Elasticity: 0.15
+  m_EnableElasticBreakLimit: 0
+  m_ElasticBreakLimit: 0.5
+--- !u!54 &177346907785525675
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,28 +138,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6658315392312446830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4718485015021904391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b309761041ee54265b7f9a8c0f373dab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ObjectPlaneTranslationMode: 0
-  m_EnablePlaneClassificationFilter: 0
-  m_PlaneClassificationsList: 
-  m_UseInteractorOrientation: 0
-  m_MinScale: 0.25
-  m_MaxScale: 2
-  m_ScaleSensitivity: 0.75
-  m_Elasticity: 0.15
-  m_EnableElasticBreakLimit: 0
-  m_ElasticBreakLimit: 0.5
 --- !u!195 &969900557523048053
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -131,7 +145,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4718485015021904391}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.37
   m_Speed: 3.5

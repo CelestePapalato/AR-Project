@@ -9853,6 +9853,16 @@ PrefabInstance:
       propertyPath: m_ARInteractor
       value: 
       objectReference: {fileID: 2066395493}
+    - target: {fileID: 3948056206296423501, guid: 55644a192a5e1344eacd3738ddba0df4,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 1073742039
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752510393392848000, guid: 55644a192a5e1344eacd3738ddba0df4,
+        type: 3}
+      propertyPath: m_VolumeLayerMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6669094731097482102, guid: 55644a192a5e1344eacd3738ddba0df4,
         type: 3}
       propertyPath: m_DetectionMode
@@ -10279,7 +10289,7 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 969900557523048053, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+    - target: {fileID: 481087848844500404, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
         type: 3}
       propertyPath: m_Enabled
       value: 0
