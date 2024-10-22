@@ -71,7 +71,7 @@ public class Pet : MonoBehaviour
     [ContextMenu("Feed")]
     public void Feed(Food food)
     {
-        if (food && food.Data)
+        if (food && food.Data && !stats.Feed.isMax)
         {
             StartCoroutine(FeedSequence(food));
         }
@@ -114,7 +114,7 @@ public class Pet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Food") && !isEating)
+        if (collision.gameObject.CompareTag("Food") && !isEating && !stats.Feed.isMax)
         {
             collision.gameObject.GetComponent<Rigidbody>().detectCollisions = false;
             Food food = collision.gameObject.GetComponent<Food>();
