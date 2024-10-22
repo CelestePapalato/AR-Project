@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b309761041ee54265b7f9a8c0f373dab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ObjectPlaneTranslationMode: 2
+  m_ObjectPlaneTranslationMode: 0
   m_EnablePlaneClassificationFilter: 0
   m_PlaneClassificationsList: 
   m_UseInteractorOrientation: 0
@@ -351,6 +351,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Interaction Affordance
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774509235512974894, guid: eb9104ef66b7305468adb3697fdeed5e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4896237787779704601, guid: eb9104ef66b7305468adb3697fdeed5e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5258331117553129771, guid: eb9104ef66b7305468adb3697fdeed5e,
         type: 3}
