@@ -57,7 +57,7 @@ public class Food : MonoBehaviour
     public void Eat(Pet pet)
     {
         rb.isKinematic = true;
-        col.isTrigger = true;
+        col.enabled = false;
         xr_interactable.enabled = false;
         pet.Feed(this);
     }
