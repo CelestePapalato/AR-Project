@@ -49,7 +49,7 @@ public class SurfaceBaker : MonoBehaviour
     }
 
     [ContextMenu("Bake")]
-    void BakeSurfaces()
+    public void BakeSurfaces()
     {
         if(toUpdate.Length > 0)
         {

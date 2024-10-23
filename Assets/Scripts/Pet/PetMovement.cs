@@ -8,10 +8,14 @@ public class PetMovement : MonoBehaviour
 {
     [SerializeField]
     float tolerableDistanceToGoal;
+    [SerializeField]
+    float checkRate;
 
     NavMeshAgent agent;
 
     public event Action OnGoalReached;
+
+    private Vector3 goal;
 
     private void Start()
     {
@@ -19,25 +23,44 @@ public class PetMovement : MonoBehaviour
         agent.enabled = true;
     }
 
-    public bool MoveTowards(Vector3 point)
+    public void MoveTowards(Vector3 point)
     {
+        CancelInvoke(nameof(CheckDistanceToGoal));
+        StopCoroutine(WaitForPath());
         NavMeshPath path = new NavMeshPath();
-        bool success = agent.CalculatePath(point, path);
-        if (success)
-        {
-            agent.path = path;
-            agent.enabled = true;
-        }
-        return success;
+        agent.enabled = true;
+        agent.destination = point;
+        StartCoroutine(WaitForPath());
     }
 
-    private IEnumerator CheckDistanceToGoal()
+    private void CheckDistanceToGoal()
     {
-        while(agent.remainingDistance > tolerableDistanceToGoal)
+        if (!agent.enabled)
         {
-            yield return null;
+            CancelInvoke(nameof(CheckDistanceToGoal));
+            return;
         }
-        agent.enabled = false;
-        OnGoalReached.Invoke();
+        if(agent.remainingDistance < tolerableDistanceToGoal)
+        {
+            agent.enabled = false;
+            OnGoalReached?.Invoke();
+        }
+    }
+
+    private IEnumerator WaitForPath()
+    {
+        while(agent.pathPending)
+        {
+            yield return new WaitForSeconds(checkRate);
+        }
+        Debug.Log(agent.pathStatus);
+        if(agent.pathStatus != NavMeshPathStatus.PathComplete)
+        {
+            agent.enabled = false;
+        }
+        else
+        {
+            InvokeRepeating(nameof(CheckDistanceToGoal), checkRate, checkRate);
+        }
     }
 }

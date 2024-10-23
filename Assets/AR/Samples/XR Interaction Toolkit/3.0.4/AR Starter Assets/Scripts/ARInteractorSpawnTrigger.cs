@@ -109,7 +109,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.ARStarterAssets
             set => m_BlockSpawnWhenInteractorHasSelection = value;
         }
 
-        bool m_AttemptSpawn;
+        bool m_AttemptSpawn = false;
         bool m_EverHadSelection;
 
         /// <summary>
