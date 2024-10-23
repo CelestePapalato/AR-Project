@@ -47,27 +47,10 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.ARStarterAssets
         bool m_AttemptSpawn;
         bool m_EverHadSelection;
 
-        [SerializeField]
-        XRInputButtonReader m_SpawnObjectInput = new XRInputButtonReader("Spawn Object");
-
-        void OnEnable()
-        {
-            m_SpawnObjectInput.EnableDirectActionIfModeUsed();
-        }
-
-        /// <summary>
-        /// See <see cref="MonoBehaviour"/>.
-        /// </summary>
-        void OnDisable()
-        {
-            m_SpawnObjectInput.DisableDirectActionIfModeUsed();
-        }
-
         void Update()
         {
             if (m_AttemptSpawn)
             {
-                Debug.Log("arrr");
                 m_AttemptSpawn = false;
 
                 // Don't spawn the object if the tap was over screen space UI.

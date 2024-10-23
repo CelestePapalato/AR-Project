@@ -54,11 +54,10 @@ public class PetMovement : MonoBehaviour
         {
             yield return new WaitForSeconds(checkRate);
         }
-        Debug.Log(agent.pathStatus);
         if(agent.pathStatus != NavMeshPathStatus.PathComplete)
         {
-            Debug.Log(lastDesiredPosition);
             agent.Warp(lastDesiredPosition);
+            agent.enabled = false;
         }
         else
         {
