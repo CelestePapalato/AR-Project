@@ -15,7 +15,7 @@ public class PetMovement : MonoBehaviour
 
     public event Action OnGoalReached;
 
-    private Vector3 goal;
+    private Vector3 lastDesiredPosition;
 
     private void Start()
     {
@@ -30,6 +30,7 @@ public class PetMovement : MonoBehaviour
         NavMeshPath path = new NavMeshPath();
         agent.enabled = true;
         agent.destination = point;
+        lastDesiredPosition = point;
         StartCoroutine(WaitForPath());
     }
 
@@ -56,7 +57,8 @@ public class PetMovement : MonoBehaviour
         Debug.Log(agent.pathStatus);
         if(agent.pathStatus != NavMeshPathStatus.PathComplete)
         {
-            agent.enabled = false;
+            Debug.Log(lastDesiredPosition);
+            agent.Warp(lastDesiredPosition);
         }
         else
         {
