@@ -10186,7 +10186,12 @@ PrefabInstance:
         type: 3}
       propertyPath: OnPositionTouch.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 8084535795816869267}
+      objectReference: {fileID: 9130600082140512893}
+    - target: {fileID: 4423806193085944901, guid: 55644a192a5e1344eacd3738ddba0df4,
+        type: 3}
+      propertyPath: OnPositionTouch.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Pet, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7164821686271271575, guid: 55644a192a5e1344eacd3738ddba0df4,
         type: 3}
       propertyPath: m_Name
@@ -10196,6 +10201,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7671802903193839964, guid: 55644a192a5e1344eacd3738ddba0df4,
+        type: 3}
+      propertyPath: m_SpawnAsChildren
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7971945121539449117, guid: 55644a192a5e1344eacd3738ddba0df4,
         type: 3}
@@ -10422,18 +10432,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87bb96759f451454d97b1bcfc5fac86c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8084535795816869267 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 481087848844500404, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
-    type: 3}
-  m_PrefabInstance: {fileID: 9130600082140512892}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a222ca7a7a09d2e4baba05c94ac1cc26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8125528244411619094
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10640,46 +10638,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 481087848844500404, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
-        type: 3}
-      propertyPath: checkRate
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 481087848844500404, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 481087848844500404, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
-        type: 3}
-      propertyPath: tolerableDistanceToGoal
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 969900557523048053, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
-        type: 3}
-      propertyPath: m_Height
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 969900557523048053, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 1852268137201602835, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1852268137201602835, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1852268137201602835, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 4718485015021904391, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
         type: 3}
       propertyPath: m_Name
@@ -10740,6 +10698,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a8bfea8980554d4c9ebd1ab27a59629, type: 3}
+--- !u!114 &9130600082140512893 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4750129540264950214, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+    type: 3}
+  m_PrefabInstance: {fileID: 9130600082140512892}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875f639fab9e11747acdc1f20300681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

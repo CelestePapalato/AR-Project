@@ -9,6 +9,8 @@ using UnityEngine.XR.Interaction.Toolkit.Feedback;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 [RequireComponent(typeof(PetStats))]
+[RequireComponent(typeof(PetMovement))]
+[RequireComponent(typeof(XRGrabInteractable))]
 public class Pet : MonoBehaviour
 {
     [SerializeField]
@@ -16,8 +18,9 @@ public class Pet : MonoBehaviour
     public PetSO Data {get => petData; }
 
     Animator animator;
-    XRSimpleInteractable XR_interactable;
+    XRGrabInteractable XR_interactable;
     PetStats stats;
+    PetMovement movement;
 
     private bool initialiazed = false;
 
@@ -31,6 +34,7 @@ public class Pet : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         stats = GetComponent<PetStats>();
+        movement = GetComponent<PetMovement>();
         InitializeData();
     }
 
@@ -38,7 +42,7 @@ public class Pet : MonoBehaviour
     {
         if (!XR_interactable)
         {
-            XR_interactable = GetComponentInChildren<XRSimpleInteractable>();
+            XR_interactable = GetComponentInChildren<XRGrabInteractable>();
         }
         if (XR_interactable)
         {
@@ -66,6 +70,11 @@ public class Pet : MonoBehaviour
             Debug.LogWarning("No pet data available");
             return;
         }
+    }
+
+    public void MoveTowards(Vector3 point)
+    {
+        movement.MoveTowards(point);
     }
 
     [ContextMenu("Feed")]
