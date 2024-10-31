@@ -14,6 +14,7 @@ public class PetMovement : MonoBehaviour
 
     NavMeshAgent agent;
 
+    public event Action OnGoalAccepted;
     public event Action OnGoalReached;
 
     private Vector3 lastDesiredPosition;
@@ -62,6 +63,7 @@ public class PetMovement : MonoBehaviour
         }
         else
         {
+            OnGoalAccepted?.Invoke();
             InvokeRepeating(nameof(CheckDistanceToGoal), checkRate, checkRate);
         }
     }

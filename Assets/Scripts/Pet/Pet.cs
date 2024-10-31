@@ -13,6 +13,8 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 [RequireComponent(typeof(XRGrabInteractable))]
 public class Pet : MonoBehaviour
 {
+    public static Pet CurrentPet;
+
     [SerializeField]
     PetSO petData;
     public PetSO Data {get => petData; }
@@ -29,12 +31,22 @@ public class Pet : MonoBehaviour
     public UnityAction<int> OnFeed;
     public UnityAction<int> OnLove;
     public UnityAction<int> OnPet;
+    public UnityAction<Vector3> OnSizeChange;
+
+    private void Awake()
+    {
+        if(CurrentPet != null && CurrentPet != this)
+        {
+            Destroy(this);
+            return;
+        }
+        CurrentPet = this;
+    }
 
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
         stats = GetComponent<PetStats>();
-        movement = GetComponent<PetMovement>();
         InitializeData();
     }
 
@@ -48,6 +60,15 @@ public class Pet : MonoBehaviour
         {
             XR_interactable.selectEntered.AddListener(Love);
         }
+        if (!movement)
+        {
+            movement = GetComponent<PetMovement>();
+        }
+        if (movement)
+        {
+            movement.OnGoalAccepted += DisableInteractable;
+            movement.OnGoalReached += EnableInteractable;
+        }
     }
 
     private void OnDisable()
@@ -55,6 +76,11 @@ public class Pet : MonoBehaviour
         if (XR_interactable)
         {
             XR_interactable.selectEntered?.RemoveListener(Love);
+        }
+        if (movement)
+        {
+            movement.OnGoalAccepted -= DisableInteractable;
+            movement.OnGoalReached -= EnableInteractable;
         }
     }
 
@@ -70,6 +96,16 @@ public class Pet : MonoBehaviour
             Debug.LogWarning("No pet data available");
             return;
         }
+    }
+
+    public void DisableInteractable()
+    {
+        XR_interactable.enabled = false;
+    }
+
+    public void EnableInteractable()
+    {
+        XR_interactable.enabled = true;
     }
 
     public void MoveTowards(Vector3 point)
@@ -88,6 +124,7 @@ public class Pet : MonoBehaviour
 
     public IEnumerator FeedSequence(Food food)
     {
+        DisableInteractable();
         isEating = true;
         LookAt(food.gameObject);
         animator.SetInteger("AnimationID", 5);
@@ -97,6 +134,7 @@ public class Pet : MonoBehaviour
         Destroy(food.gameObject);
         animator.SetInteger("AnimationID", 1);
         isEating = false;
+        EnableInteractable();
         OnFeed?.Invoke(food.Data.FeedPoints);
         OnLove?.Invoke(food.Data.LovePoints);
     }

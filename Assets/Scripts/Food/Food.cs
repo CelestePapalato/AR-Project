@@ -36,6 +36,7 @@ public class Food : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         col = GetComponentInChildren<Collider>();
         xr_interactable = GetComponent<XRGrabInteractable>();
+        InitializeScale();
     }
 
     public void InitializeData(FoodSO food)
@@ -60,6 +61,11 @@ public class Food : MonoBehaviour
         col.enabled = false;
         xr_interactable.enabled = false;
         pet.Feed(this);
+    }
+
+    public void InitializeScale()
+    {
+        transform.localScale = Pet.CurrentPet.transform.localScale;
     }
 
 }
