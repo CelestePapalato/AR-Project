@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Fruits Salad
   m_EditorClassIdentifier: 
   FeedPoints: 5
+  WaterPoints: 8
   LovePoints: 4
   EatingTime: 10

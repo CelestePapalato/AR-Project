@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   foodData: {fileID: 11400000, guid: d090d978f576c444bb691a937ddf2df8, type: 2}
   feedPoints: 0
+  waterPoints: 0
   lovePoints: 0
 --- !u!54 &5660621889292002417
 Rigidbody:
@@ -338,7 +339,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 3681627790181721583, guid: e0688f4e88859494491422b3bf70c172, type: 3}
 --- !u!1001 &8735104728645936080

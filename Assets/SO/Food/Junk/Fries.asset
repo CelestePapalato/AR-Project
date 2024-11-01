@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Fries
   m_EditorClassIdentifier: 
   FeedPoints: 4
+  WaterPoints: 1
   LovePoints: 8
   EatingTime: 7

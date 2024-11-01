@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 613d6dead5fb97a4c91865f6c5111f67, type: 3}
   m_Name: Water
   m_EditorClassIdentifier: 
-  FeedPoints: 1
+  FeedPoints: 0
+  WaterPoints: 10
   LovePoints: 2
-  EatingTime: 3
+  EatingTime: 10

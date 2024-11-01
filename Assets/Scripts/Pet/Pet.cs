@@ -29,6 +29,7 @@ public class Pet : MonoBehaviour
     private bool isEating = false;
 
     public UnityAction<int> OnFeed;
+    public UnityAction<int> OnWater;
     public UnityAction<int> OnLove;
     public UnityAction<int> OnPet;
     public UnityAction<Vector3> OnSizeChange;
@@ -116,7 +117,7 @@ public class Pet : MonoBehaviour
     [ContextMenu("Feed")]
     public void Feed(Food food)
     {
-        if (food && food.Data && !stats.Feed.isMax)
+        if (food && food.Data)
         {
             StartCoroutine(FeedSequence(food));
         }
@@ -130,12 +131,14 @@ public class Pet : MonoBehaviour
         animator.SetInteger("AnimationID", 5);
         yield return new WaitForSeconds(food.Data.EatingTime);
         stats.Feed.Value += food.Data.FeedPoints;
+        stats.Water.Value += food.Data.WaterPoints;
         stats.Love.Value += food.Data.LovePoints;
         Destroy(food.gameObject);
         animator.SetInteger("AnimationID", 1);
         isEating = false;
         EnableInteractable();
         OnFeed?.Invoke(food.Data.FeedPoints);
+        OnWater?.Invoke(food.Data.WaterPoints);
         OnLove?.Invoke(food.Data.LovePoints);
     }
 
@@ -161,10 +164,15 @@ public class Pet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Food") && !isEating && !stats.Feed.isMax)
+        if (collision.gameObject.CompareTag("Food") && !isEating)
         {
             Food food = collision.gameObject.GetComponent<Food>();
-            food.Eat(this);
+            bool shouldEat = !stats.Feed.isMax;
+            bool shouldHydrate = food.Data.FeedPoints <= 0 && !stats.Water.isMax && food.Data.WaterPoints > 0;
+            if (shouldEat || shouldHydrate)
+            {
+                food.Eat(this);
+            }
         }
     }
 

@@ -6,6 +6,7 @@ using UnityEngine;
 public class FoodSO : ScriptableObject
 {
     public int FeedPoints;
+    public int WaterPoints;
     public int LovePoints;
     public float EatingTime;
 }

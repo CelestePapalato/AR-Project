@@ -53,11 +53,14 @@ public class PetStats : MonoBehaviour
     [SerializeField]
     private Stat feed;
     [SerializeField]
+    private Stat water;
+    [SerializeField]
     private Stat love;
     [SerializeField]
     private Stat petting;
 
     public Stat Feed { get => feed; }
+    public Stat Water { get => water; }
     public Stat Love { get => love; }
     public Stat Petting { get => petting; }
 
@@ -84,6 +87,7 @@ public class PetStats : MonoBehaviour
     private void OnEnable()
     {
         feed.OnValueModified += RestartFeedDecrease;
+        water.OnValueModified += RestartWaterDecrease;
         love.OnValueModified += RestartLoveDecrease;
         petting.OnValueModified += StartPettingDecrease;
     }
@@ -91,6 +95,7 @@ public class PetStats : MonoBehaviour
     private void OnDisable()
     {
         feed.OnValueModified -= RestartFeedDecrease;
+        water.OnValueModified -= RestartWaterDecrease;
         love.OnValueModified -= RestartLoveDecrease;
         petting.OnValueModified -= StartPettingDecrease;
     }
@@ -109,6 +114,7 @@ public class PetStats : MonoBehaviour
         }
 
         feed = new Stat(0, 0, petData.MaxFeed);
+        water = new Stat(0, 0, petData.MaxWater);
         love = new Stat(0, 0, petData.MaxLove);
         petting = new Stat(0, 0, petData.MaxPettingCount);
         initializedStats = true;
@@ -120,6 +126,12 @@ public class PetStats : MonoBehaviour
         if (diff < 0) { return; }
         CancelInvoke(nameof(FeedDecrease));
         Invoke(nameof(FeedDecrease), petData.FeedDecreaseRate);
+    }
+    private void RestartWaterDecrease(int value, int diff)
+    {
+        if (diff < 0) { return; }
+        CancelInvoke(nameof(WaterDecrease));
+        Invoke(nameof(WaterDecrease), petData.WaterDecreaseRate);
     }
 
     private void RestartLoveDecrease(int value, int diff)
@@ -141,6 +153,13 @@ public class PetStats : MonoBehaviour
         feed.Value -= petData.FeedDecreaseValue;
         if (feed.Value == 0) { return; }
         Invoke(nameof(FeedDecrease), petData.FeedDecreaseRate);
+    }
+
+    private void WaterDecrease()
+    {
+        water.Value -= petData.WaterDecreaseValue;
+        if (feed.Value == 0) { return; }
+        Invoke(nameof(FeedDecrease), petData.WaterDecreaseRate);
     }
 
     private void StartPettingDecrease(int value, int diff)

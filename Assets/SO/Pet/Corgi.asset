@@ -15,6 +15,9 @@ MonoBehaviour:
   MaxFeed: 50
   FeedDecreaseRate: 15
   FeedDecreaseValue: 2
+  MaxWater: 50
+  WaterDecreaseRate: 5
+  WaterDecreaseValue: 1
   MaxLove: 50
   LoveDecreaseRate: 15
   LoveDecreaseValue: 2

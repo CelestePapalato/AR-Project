@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Muffin
   m_EditorClassIdentifier: 
   FeedPoints: 2
+  WaterPoints: 1
   LovePoints: 3
   EatingTime: 3

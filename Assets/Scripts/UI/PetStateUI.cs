@@ -12,6 +12,8 @@ public class PetStateUI : MonoBehaviour
     [SerializeField]
     Slider feedSlider;
     [SerializeField]
+    Slider waterSlider;
+    [SerializeField]
     Slider loveSlider;
     [SerializeField]
     Slider pettingCooldownSlider;
@@ -26,6 +28,7 @@ public class PetStateUI : MonoBehaviour
         if(pet != null)
         {
             pet.Feed.OnUpdate += UpdateFeed;
+            pet.Water.OnUpdate += UpdateWater;
             pet.Love.OnUpdate += UpdateLove;
             pet.OnPettingCooldownUpdate += UpdatePettingCooldown;
         }
@@ -36,6 +39,7 @@ public class PetStateUI : MonoBehaviour
         if(pet != null)
         {
             pet.Feed.OnUpdate -= UpdateFeed;
+            pet.Water.OnUpdate -= UpdateWater;
             pet.Love.OnUpdate -= UpdateLove;
             pet.OnPettingCooldownUpdate -= UpdatePettingCooldown;
         }
@@ -49,6 +53,10 @@ public class PetStateUI : MonoBehaviour
     private void UpdateFeed(int feed, int minFeed, int maxFeed)
     {
         feedSlider.value = (float) feed/maxFeed;
+    }
+    private void UpdateWater(int feed, int minFeed, int maxFeed)
+    {
+        waterSlider.value = (float)feed / maxFeed;
     }
 
     private void UpdatePettingCooldown(float current, float startTime)

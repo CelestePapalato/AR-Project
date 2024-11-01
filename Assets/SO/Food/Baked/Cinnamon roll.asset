@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Cinnamon roll
   m_EditorClassIdentifier: 
   FeedPoints: 3
+  WaterPoints: 1
   LovePoints: 5
   EatingTime: 4

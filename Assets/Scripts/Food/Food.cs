@@ -15,6 +15,8 @@ public class Food : MonoBehaviour
     [SerializeField]
     private int feedPoints;
     [SerializeField]
+    private int waterPoints;
+    [SerializeField]
     private int lovePoints;
 
     [System.Obsolete]
@@ -52,6 +54,7 @@ public class Food : MonoBehaviour
         }
         foodData = food;
         feedPoints = foodData.FeedPoints;
+        waterPoints = foodData.WaterPoints;
         lovePoints = foodData.LovePoints;
     }
 

@@ -9,6 +9,10 @@ public class PetSO : ScriptableObject
     public int MaxFeed;
     public int FeedDecreaseRate;
     public int FeedDecreaseValue;
+    [Header("Hydration")]
+    public int MaxWater;
+    public int WaterDecreaseRate;
+    public int WaterDecreaseValue;
     [Header("Love")]
     public int MaxLove;
     public int LoveDecreaseRate;

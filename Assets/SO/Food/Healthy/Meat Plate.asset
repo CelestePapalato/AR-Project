@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Meat Plate
   m_EditorClassIdentifier: 
   FeedPoints: 7
+  WaterPoints: 5
   LovePoints: 6
   EatingTime: 10

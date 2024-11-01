@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Strawberry Cake
   m_EditorClassIdentifier: 
   FeedPoints: 6
+  WaterPoints: 2
   LovePoints: 10
   EatingTime: 10
