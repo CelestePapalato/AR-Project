@@ -3,7 +3,12 @@ guid: b586015bfd1150f42b8120acafc07cf4
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Food_Color_mat
+    second: {fileID: 2100000, guid: 995bb389c6449d54480996901f427588, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
