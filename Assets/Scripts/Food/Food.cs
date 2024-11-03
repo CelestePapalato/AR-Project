@@ -11,6 +11,8 @@ public class Food : MonoBehaviour
     public static List<Food> spawned = new List<Food>();
     public static event Action OnObjectSpawned;
 
+    public event Action OnFoodDestroyed;
+
     [SerializeField]
     FoodSO foodData;
     public FoodSO Data { get => foodData; }
@@ -45,6 +47,12 @@ public class Food : MonoBehaviour
         InitializeScale();
         spawned.Add(this);
         OnObjectSpawned?.Invoke();
+    }
+
+    private void OnDestroy()
+    {
+        spawned.Remove(this);
+        OnFoodDestroyed?.Invoke();
     }
 
     public void InitializeData(FoodSO food)

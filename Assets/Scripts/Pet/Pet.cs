@@ -35,6 +35,8 @@ public class Pet : MonoBehaviour
     public UnityAction<int> OnPet;
     public UnityAction<Vector3> OnSizeChange;
 
+    private Food foodFollowing;
+
     private void Awake()
     {
         if(CurrentPet != null && CurrentPet != this)
@@ -72,6 +74,11 @@ public class Pet : MonoBehaviour
             movement.OnGoalReached += EnableInteractable;
         }
         Food.OnObjectSpawned += MoveTowardsFood;
+
+        if (foodFollowing)
+        {
+            foodFollowing.OnFoodDestroyed += OnFoodDeleted;
+        }
     }
 
     private void OnDisable()
@@ -86,6 +93,11 @@ public class Pet : MonoBehaviour
             movement.OnGoalReached -= EnableInteractable;
         }
         Food.OnObjectSpawned -= MoveTowardsFood;
+
+        if (foodFollowing)
+        {
+            foodFollowing.OnFoodDestroyed -= OnFoodDeleted;
+        }
     }
 
     private void InitializeData()
@@ -129,13 +141,23 @@ public class Pet : MonoBehaviour
         if (toEat)
         {
             isSearchingFood = true;
+            foodFollowing = toEat;
             movement.MoveTowards(toEat.transform);
+            foodFollowing.OnFoodDestroyed += OnFoodDeleted;
         }
+    }
+
+    private void OnFoodDeleted()
+    {
+        foodFollowing.OnFoodDestroyed -= OnFoodDeleted;
+        movement.Stop();
+        CheckIfThereIsMoreFood();
     }
 
     private void CheckIfThereIsMoreFood()
     {
         isSearchingFood = false;
+        foodFollowing = null;
         if(Food.spawned.Count > 0 )
         {
             MoveTowardsFood();
@@ -174,14 +196,13 @@ public class Pet : MonoBehaviour
         stats.Feed.Value += food.Data.FeedPoints;
         stats.Water.Value += food.Data.WaterPoints;
         stats.Love.Value += food.Data.LovePoints;
-        Destroy(food.gameObject);
         animator.SetInteger("AnimationID", 1);
         isEating = false;
         EnableInteractable();
         OnFeed?.Invoke(food.Data.FeedPoints);
         OnWater?.Invoke(food.Data.WaterPoints);
         OnLove?.Invoke(food.Data.LovePoints);
-        CheckIfThereIsMoreFood();
+        Destroy(food.gameObject);
     }
 
     [ContextMenu("Pet")]
