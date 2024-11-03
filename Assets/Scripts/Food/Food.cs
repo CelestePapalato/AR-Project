@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,9 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 [RequireComponent(typeof(Rigidbody))]
 public class Food : MonoBehaviour
 {
+    public static List<Food> spawned = new List<Food>();
+    public static event Action OnObjectSpawned;
+
     [SerializeField]
     FoodSO foodData;
     public FoodSO Data { get => foodData; }
@@ -27,7 +31,7 @@ public class Food : MonoBehaviour
 
     bool initialized = false;
 
-    void Start()
+    private void Start()
     {
         if(foodData == null)
         {
@@ -39,6 +43,8 @@ public class Food : MonoBehaviour
         col = GetComponentInChildren<Collider>();
         xr_interactable = GetComponent<XRGrabInteractable>();
         InitializeScale();
+        spawned.Add(this);
+        OnObjectSpawned?.Invoke();
     }
 
     public void InitializeData(FoodSO food)
@@ -63,6 +69,7 @@ public class Food : MonoBehaviour
         rb.isKinematic = true;
         col.enabled = false;
         xr_interactable.enabled = false;
+        spawned.Remove(this);
         pet.Feed(this);
     }
 

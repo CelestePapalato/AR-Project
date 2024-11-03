@@ -27,6 +27,7 @@ public class Pet : MonoBehaviour
     private bool initialiazed = false;
 
     private bool isEating = false;
+    private bool isSearchingFood = false;
 
     public UnityAction<int> OnFeed;
     public UnityAction<int> OnWater;
@@ -70,6 +71,7 @@ public class Pet : MonoBehaviour
             movement.OnGoalAccepted += DisableInteractable;
             movement.OnGoalReached += EnableInteractable;
         }
+        Food.OnObjectSpawned += MoveTowardsFood;
     }
 
     private void OnDisable()
@@ -83,6 +85,7 @@ public class Pet : MonoBehaviour
             movement.OnGoalAccepted -= DisableInteractable;
             movement.OnGoalReached -= EnableInteractable;
         }
+        Food.OnObjectSpawned -= MoveTowardsFood;
     }
 
     private void InitializeData()
@@ -109,6 +112,43 @@ public class Pet : MonoBehaviour
         XR_interactable.enabled = true;
     }
 
+    public void MoveTowardsFood()
+    {
+        if (isSearchingFood) { return; }
+        List<Food> list = Food.spawned;
+        Food toEat = null;
+        for(int i = 0; i < list.Count; i++)
+        {
+            if (ShouldEat(list[i].Data))
+            {
+                toEat = list[i];
+                break;
+            }
+        }
+
+        if (toEat)
+        {
+            isSearchingFood = true;
+            movement.MoveTowards(toEat.transform);
+        }
+    }
+
+    private void CheckIfThereIsMoreFood()
+    {
+        isSearchingFood = false;
+        if(Food.spawned.Count > 0 )
+        {
+            MoveTowardsFood();
+        }
+    }
+
+    private bool ShouldEat(FoodSO data)
+    {
+        bool shouldEat = !stats.Feed.isMax;
+        bool shouldHydrate = data.FeedPoints <= 0 && !stats.Water.isMax && data.WaterPoints > 0;
+        return shouldEat || shouldHydrate;
+    }
+
     public void MoveTowards(Vector3 point)
     {
         movement.MoveTowards(point);
@@ -126,6 +166,7 @@ public class Pet : MonoBehaviour
     public IEnumerator FeedSequence(Food food)
     {
         DisableInteractable();
+        movement.Stop();
         isEating = true;
         LookAt(food.gameObject);
         animator.SetInteger("AnimationID", 5);
@@ -140,19 +181,20 @@ public class Pet : MonoBehaviour
         OnFeed?.Invoke(food.Data.FeedPoints);
         OnWater?.Invoke(food.Data.WaterPoints);
         OnLove?.Invoke(food.Data.LovePoints);
+        CheckIfThereIsMoreFood();
     }
 
     [ContextMenu("Pet")]
     private void Love(SelectEnterEventArgs xr_event)
     {
         if(stats.Petting.isMax || isEating) { return; }
+        movement.Stop();
         stats.Love.Value += petData.pettingLovePoints;
         OnLove?.Invoke(petData.pettingLovePoints);
         OnPet?.Invoke(petData.pettingLovePoints);
         animator.SetInteger("AnimationID", 7);
         stats.Petting.Value += 1;
     }
-
 
     private void LookAt(GameObject obj)
     {
@@ -167,9 +209,7 @@ public class Pet : MonoBehaviour
         if (collision.gameObject.CompareTag("Food") && !isEating)
         {
             Food food = collision.gameObject.GetComponent<Food>();
-            bool shouldEat = !stats.Feed.isMax;
-            bool shouldHydrate = food.Data.FeedPoints <= 0 && !stats.Water.isMax && food.Data.WaterPoints > 0;
-            if (shouldEat || shouldHydrate)
+            if (ShouldEat(food.Data))
             {
                 food.Eat(this);
             }

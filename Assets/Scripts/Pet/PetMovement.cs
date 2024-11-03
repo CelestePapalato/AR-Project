@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,63 +9,110 @@ using UnityEngine.AI;
 public class PetMovement : MonoBehaviour
 {
     [SerializeField]
+    float bakeWaitTime;
+    [SerializeField]
     float tolerableDistanceToGoal;
     [SerializeField]
     float checkRate;
+    [SerializeField]
+    float pathBakeRate;
 
     NavMeshAgent agent;
 
     public event Action OnGoalAccepted;
     public event Action OnGoalReached;
 
-    private Vector3 lastDesiredPosition;
+    private Coroutine currentCoroutine;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.enabled = true;
+        agent.enabled = false;
     }
 
     public void MoveTowards(Vector3 point)
     {
-        CancelInvoke(nameof(CheckDistanceToGoal));
-        StopCoroutine(WaitForPath());
+        if(currentCoroutine != null) { StopCoroutine(currentCoroutine); }
         NavMeshPath path = new NavMeshPath();
         agent.enabled = true;
-        agent.destination = point;
-        lastDesiredPosition = point;
-        StartCoroutine(WaitForPath());
+        currentCoroutine = StartCoroutine(GoToPoint(point));
     }
 
-    private void CheckDistanceToGoal()
+    public void MoveTowards(Transform transform)
     {
-        if (!agent.enabled)
+        if (currentCoroutine != null) { StopCoroutine(currentCoroutine); }
+        NavMeshPath path = new NavMeshPath();
+        agent.enabled = true;
+        currentCoroutine = StartCoroutine(Follow(transform));
+    }
+
+    public void Stop()
+    {
+        StopCoroutine(currentCoroutine);
+        agent.enabled = false;
+    }
+
+    private IEnumerator GoToPoint(Vector3 objective)
+    {
+        float distanceToGoal = Mathf.Infinity;
+        while (distanceToGoal > tolerableDistanceToGoal && agent.enabled)
         {
-            CancelInvoke(nameof(CheckDistanceToGoal));
-            return;
+            SurfaceBaker.Instance.BakeSurfaces();
+            while(NavMeshSurface.activeSurfaces.Count == 0)
+            {
+                yield return null;
+            }
+
+            agent.SetDestination(objective);
+
+            while (agent.pathPending)
+            {
+                yield return new WaitForSeconds(checkRate);
+            }
+
+            if (agent.pathStatus != NavMeshPathStatus.PathComplete)
+            {
+                agent.Warp(objective);
+                agent.enabled = false;
+                yield break;
+            }
+
+            yield return new WaitForSeconds(pathBakeRate);
+
+            distanceToGoal = agent.remainingDistance;
         }
-        if(agent.remainingDistance < tolerableDistanceToGoal)
+
+        if (agent.remainingDistance <= tolerableDistanceToGoal)
         {
-            agent.enabled = false;
             OnGoalReached?.Invoke();
         }
     }
 
-    private IEnumerator WaitForPath()
+    IEnumerator Follow(Transform objective)
     {
-        while(agent.pathPending)
+        if (!objective) { yield break; }
+        while (agent.enabled && objective)
         {
-            yield return new WaitForSeconds(checkRate);
+            SurfaceBaker.Instance.BakeSurfaces();
+            yield return new WaitForSeconds(bakeWaitTime);
+
+            if (!objective) {  break; }
+            agent.SetDestination(objective.position);
+
+            while (agent.pathPending)
+            {
+                yield return new WaitForSeconds(checkRate);
+            }
+
+            if (agent.pathStatus != NavMeshPathStatus.PathComplete)
+            {
+                agent.Warp(objective.position);
+                agent.enabled = false;
+                yield break;
+            }
+
+            yield return new WaitForSeconds(pathBakeRate);
         }
-        if(agent.pathStatus != NavMeshPathStatus.PathComplete)
-        {
-            agent.Warp(lastDesiredPosition);
-            agent.enabled = false;
-        }
-        else
-        {
-            OnGoalAccepted?.Invoke();
-            InvokeRepeating(nameof(CheckDistanceToGoal), checkRate, checkRate);
-        }
+
     }
 }

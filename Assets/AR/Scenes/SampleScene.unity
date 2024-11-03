@@ -10461,6 +10461,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4423806193085944901, guid: 55644a192a5e1344eacd3738ddba0df4,
         type: 3}
+      propertyPath: OnTouch.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423806193085944901, guid: 55644a192a5e1344eacd3738ddba0df4,
+        type: 3}
       propertyPath: OnPositionTouch.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 9130600082140512893}
@@ -10962,6 +10967,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 481087848844500404, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+        type: 3}
+      propertyPath: pathRate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 481087848844500404, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+        type: 3}
+      propertyPath: bakeWaitTime
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4718485015021904391, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
         type: 3}
       propertyPath: m_Name

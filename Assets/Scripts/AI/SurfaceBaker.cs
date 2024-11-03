@@ -7,7 +7,19 @@ using Unity.AI.Navigation;
 
 public class SurfaceBaker : MonoBehaviour
 {
+    public static SurfaceBaker Instance;
+
     public ARPlaneManager planeManager;
+
+    private void Awake()
+    {
+        if(Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+        Instance = this;
+    }
 
     private void OnEnable()
     {
