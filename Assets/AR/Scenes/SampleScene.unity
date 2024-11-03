@@ -7980,6 +7980,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1545687380}
   m_CullTransparentMesh: 1
+--- !u!1 &1682943503 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4718485015021904391, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+    type: 3}
+  m_PrefabInstance: {fileID: 9130600082140512892}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1718107847
 GameObject:
   m_ObjectHideFlags: 0
@@ -10755,7 +10761,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 9130600082140512892}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1682943503}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87bb96759f451454d97b1bcfc5fac86c, type: 3}
@@ -10977,6 +10983,11 @@ PrefabInstance:
       propertyPath: bakeWaitTime
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 481087848844500404, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+        type: 3}
+      propertyPath: pathBakeRate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4718485015021904391, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
         type: 3}
       propertyPath: m_Name
@@ -11040,7 +11051,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4718485015021904391, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+        type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 9130600082140512900}
   m_SourcePrefab: {fileID: 100100000, guid: 4a8bfea8980554d4c9ebd1ab27a59629, type: 3}
 --- !u!114 &9130600082140512893 stripped
 MonoBehaviour:
@@ -11048,12 +11063,27 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 9130600082140512892}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1682943503}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 875f639fab9e11747acdc1f20300681d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9130600082140512900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682943503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f6d45c20ccf8a149a02615aadc8384c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eatingTransitionLength: 1.2
+  pettingTransitionLength: 1
+  pettingLength: 7
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

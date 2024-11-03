@@ -21,6 +21,8 @@ public class PetMovement : MonoBehaviour
 
     public event Action OnGoalAccepted;
     public event Action OnGoalReached;
+    public event Action OnMovementStart;
+    public event Action OnMovementEnd;
 
     private Coroutine currentCoroutine;
 
@@ -35,6 +37,7 @@ public class PetMovement : MonoBehaviour
         if(currentCoroutine != null) { StopCoroutine(currentCoroutine); }
         NavMeshPath path = new NavMeshPath();
         agent.enabled = true;
+        agent.destination = agent.transform.position;
         currentCoroutine = StartCoroutine(GoToPoint(point));
     }
 
@@ -43,12 +46,16 @@ public class PetMovement : MonoBehaviour
         if (currentCoroutine != null) { StopCoroutine(currentCoroutine); }
         NavMeshPath path = new NavMeshPath();
         agent.enabled = true;
+        agent.destination = agent.transform.position;
         currentCoroutine = StartCoroutine(Follow(transform));
     }
 
     public void Stop()
     {
-        StopCoroutine(currentCoroutine);
+        if(currentCoroutine != null)
+        {
+            StopCoroutine(currentCoroutine);
+        }
         agent.enabled = false;
     }
 
@@ -62,6 +69,8 @@ public class PetMovement : MonoBehaviour
             {
                 yield return null;
             }
+
+            OnMovementStart?.Invoke();
 
             agent.SetDestination(objective);
 
@@ -86,6 +95,8 @@ public class PetMovement : MonoBehaviour
         {
             OnGoalReached?.Invoke();
         }
+
+        OnMovementEnd?.Invoke();
     }
 
     IEnumerator Follow(Transform objective)
@@ -94,7 +105,12 @@ public class PetMovement : MonoBehaviour
         while (agent.enabled && objective)
         {
             SurfaceBaker.Instance.BakeSurfaces();
-            yield return new WaitForSeconds(bakeWaitTime);
+            while (NavMeshSurface.activeSurfaces.Count == 0)
+            {
+                yield return null;
+            }
+
+            OnMovementStart?.Invoke();
 
             if (!objective) {  break; }
             agent.SetDestination(objective.position);
@@ -114,5 +130,6 @@ public class PetMovement : MonoBehaviour
             yield return new WaitForSeconds(pathBakeRate);
         }
 
+        OnMovementEnd?.Invoke();
     }
 }

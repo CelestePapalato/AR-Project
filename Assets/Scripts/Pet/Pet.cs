@@ -18,8 +18,8 @@ public class Pet : MonoBehaviour
     [SerializeField]
     PetSO petData;
     public PetSO Data {get => petData; }
+    public PetMovement MovementController { get => movement; }
 
-    Animator animator;
     XRGrabInteractable XR_interactable;
     PetStats stats;
     PetMovement movement;
@@ -29,11 +29,17 @@ public class Pet : MonoBehaviour
     private bool isEating = false;
     private bool isSearchingFood = false;
 
+    public bool ShouldSearchFood = true;
+
     public UnityAction<int> OnFeed;
     public UnityAction<int> OnWater;
     public UnityAction<int> OnLove;
     public UnityAction<int> OnPet;
     public UnityAction<Vector3> OnSizeChange;
+
+    public UnityAction OnStartEating;
+    public UnityAction OnStopEating;
+    public UnityAction OnPetting;
 
     private Food foodFollowing;
 
@@ -49,7 +55,6 @@ public class Pet : MonoBehaviour
 
     private void Start()
     {
-        animator = GetComponentInChildren<Animator>();
         stats = GetComponent<PetStats>();
         InitializeData();
     }
@@ -126,7 +131,7 @@ public class Pet : MonoBehaviour
 
     public void MoveTowardsFood()
     {
-        if (isSearchingFood) { return; }
+        if (isSearchingFood || !ShouldSearchFood) { return; }
         List<Food> list = Food.spawned;
         Food toEat = null;
         for(int i = 0; i < list.Count; i++)
@@ -150,13 +155,14 @@ public class Pet : MonoBehaviour
     private void OnFoodDeleted()
     {
         foodFollowing.OnFoodDestroyed -= OnFoodDeleted;
+        isSearchingFood = false;
         movement.Stop();
-        CheckIfThereIsMoreFood();
+        CheckForFood();
     }
 
-    private void CheckIfThereIsMoreFood()
+    public void CheckForFood()
     {
-        isSearchingFood = false;
+        if (isSearchingFood || !ShouldSearchFood) { return; }
         foodFollowing = null;
         if(Food.spawned.Count > 0 )
         {
@@ -191,12 +197,12 @@ public class Pet : MonoBehaviour
         movement.Stop();
         isEating = true;
         LookAt(food.gameObject);
-        animator.SetInteger("AnimationID", 5);
+        OnStartEating?.Invoke();
         yield return new WaitForSeconds(food.Data.EatingTime);
         stats.Feed.Value += food.Data.FeedPoints;
         stats.Water.Value += food.Data.WaterPoints;
         stats.Love.Value += food.Data.LovePoints;
-        animator.SetInteger("AnimationID", 1);
+        OnStopEating?.Invoke();
         isEating = false;
         EnableInteractable();
         OnFeed?.Invoke(food.Data.FeedPoints);
@@ -213,7 +219,7 @@ public class Pet : MonoBehaviour
         stats.Love.Value += petData.pettingLovePoints;
         OnLove?.Invoke(petData.pettingLovePoints);
         OnPet?.Invoke(petData.pettingLovePoints);
-        animator.SetInteger("AnimationID", 7);
+        OnPetting?.Invoke();
         stats.Petting.Value += 1;
     }
 
