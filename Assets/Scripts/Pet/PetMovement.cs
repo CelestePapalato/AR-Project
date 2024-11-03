@@ -83,6 +83,7 @@ public class PetMovement : MonoBehaviour
             {
                 agent.Warp(objective);
                 agent.enabled = false;
+                OnMovementEnd?.Invoke();
                 yield break;
             }
 
@@ -95,6 +96,8 @@ public class PetMovement : MonoBehaviour
         {
             OnGoalReached?.Invoke();
         }
+
+        agent.enabled = false;
 
         OnMovementEnd?.Invoke();
     }
@@ -124,11 +127,14 @@ public class PetMovement : MonoBehaviour
             {
                 agent.Warp(objective.position);
                 agent.enabled = false;
+                OnMovementEnd?.Invoke();
                 yield break;
             }
 
             yield return new WaitForSeconds(pathBakeRate);
         }
+
+        agent.enabled = false;
 
         OnMovementEnd?.Invoke();
     }
