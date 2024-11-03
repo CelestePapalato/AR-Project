@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Feedback;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -179,6 +180,7 @@ public class Pet : MonoBehaviour
 
     public void MoveTowards(Vector3 point)
     {
+        if(isEating) { return; }
         movement.MoveTowards(point);
     }
 
@@ -215,6 +217,7 @@ public class Pet : MonoBehaviour
     private void Love(SelectEnterEventArgs xr_event)
     {
         if(stats.Petting.isMax || isEating) { return; }
+        isSearchingFood = false;
         movement.Stop();
         stats.Love.Value += petData.pettingLovePoints;
         OnLove?.Invoke(petData.pettingLovePoints);

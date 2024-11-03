@@ -49,12 +49,14 @@ public class PetAnimationController : MonoBehaviour
     public void IdleAnimation()
     {
         StopAllCoroutines();
+        pet.ShouldSearchFood = true;
         animator.SetInteger("AnimationID", 0);
     }
 
     public void MoveAnimation()
     {
         StopAllCoroutines();
+        pet.ShouldSearchFood = false;
         animator.SetInteger("AnimationID", 4);
     }
 
@@ -87,7 +89,6 @@ public class PetAnimationController : MonoBehaviour
         pet.ShouldSearchFood = false;
         animator.SetInteger("AnimationID", 1);
         yield return new WaitForSeconds(eatingTransitionLength);
-        Debug.Log(pet.ShouldSearchFood);
         pet.ShouldSearchFood = true;
         pet?.CheckForFood();
     }
