@@ -63,6 +63,7 @@ public class Food : MonoBehaviour
 
         if(timeFalling >= timeFallingUntilDestroy)
         {
+            spawned.Remove(this);
             Destroy(gameObject);
         }
     }
