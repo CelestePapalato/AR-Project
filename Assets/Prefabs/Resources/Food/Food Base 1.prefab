@@ -50,7 +50,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodData: {fileID: 11400000, guid: ad0d41491b6c6374fa232700a97fe369, type: 2}
+  timeFallingUntilDestroy: 3
   feedPoints: 0
+  waterPoints: 0
   lovePoints: 0
 --- !u!54 &5660621889292002417
 Rigidbody:

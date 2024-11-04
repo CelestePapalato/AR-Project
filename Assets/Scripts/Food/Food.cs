@@ -15,6 +15,9 @@ public class Food : MonoBehaviour
 
     [SerializeField]
     FoodSO foodData;
+    [SerializeField]
+    float timeFallingUntilDestroy;
+
     public FoodSO Data { get => foodData; }
 
     [Header("DEBUG")]
@@ -30,6 +33,8 @@ public class Food : MonoBehaviour
     private Rigidbody rb;
     private Collider col;
     private XRGrabInteractable xr_interactable;
+
+    private float timeFalling = 0f;
 
     bool initialized = false;
 
@@ -47,6 +52,19 @@ public class Food : MonoBehaviour
         InitializeScale();
         spawned.Add(this);
         OnObjectSpawned?.Invoke();
+    }
+
+    private void Update()
+    {
+        if(rb.velocity.y < 0)
+        {
+            timeFalling += Time.deltaTime;
+        }
+
+        if(timeFalling >= timeFallingUntilDestroy)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnDestroy()
