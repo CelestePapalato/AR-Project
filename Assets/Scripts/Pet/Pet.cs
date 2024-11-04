@@ -239,6 +239,13 @@ public class Pet : MonoBehaviour
         if (collision.gameObject.CompareTag("Food") && !isEating)
         {
             Food food = collision.gameObject.GetComponent<Food>();
+            if(food != foodFollowing)
+            {
+                foodFollowing.OnFoodDestroyed -= OnFoodDeleted;
+                foodFollowing = food;
+                foodFollowing.OnFoodDestroyed += OnFoodDeleted;
+            }
+            
             if (ShouldEat(food.Data))
             {
                 food.Eat(this);
