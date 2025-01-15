@@ -72,6 +72,7 @@ public class Food : MonoBehaviour
     {
         spawned.Remove(this);
         OnFoodDestroyed?.Invoke();
+        OnFoodDestroyed = null;
     }
 
     public void InitializeData(FoodSO food)

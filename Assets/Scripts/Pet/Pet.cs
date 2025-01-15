@@ -155,7 +155,6 @@ public class Pet : MonoBehaviour
 
     private void OnFoodDeleted()
     {
-        foodFollowing.OnFoodDestroyed -= OnFoodDeleted;
         isSearchingFood = false;
         movement.Stop();
         CheckForFood();
@@ -163,6 +162,7 @@ public class Pet : MonoBehaviour
 
     public void CheckForFood()
     {
+        Debug.LogWarning($"{isSearchingFood || !ShouldSearchFood} | {isSearchingFood}, {!ShouldSearchFood}");
         if (isSearchingFood || !ShouldSearchFood) { return; }
         foodFollowing = null;
         if(Food.spawned.Count > 0 )
@@ -181,6 +181,7 @@ public class Pet : MonoBehaviour
     public void MoveTowards(Vector3 point)
     {
         if(isEating) { return; }
+        isSearchingFood = false;
         movement.MoveTowards(point);
     }
 
@@ -205,12 +206,12 @@ public class Pet : MonoBehaviour
         stats.Water.Value += food.Data.WaterPoints;
         stats.Love.Value += food.Data.LovePoints;
         OnStopEating?.Invoke();
-        isEating = false;
-        EnableInteractable();
         OnFeed?.Invoke(food.Data.FeedPoints);
         OnWater?.Invoke(food.Data.WaterPoints);
         OnLove?.Invoke(food.Data.LovePoints);
         Destroy(food.gameObject);
+        isEating = false;
+        EnableInteractable();
     }
 
     [ContextMenu("Pet")]
