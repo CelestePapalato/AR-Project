@@ -6247,6 +6247,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1059051467}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1306100198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6532,6 +6544,24 @@ MonoBehaviour:
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
   m_CancelButton: Cancel
+--- !u!1 &1324612974 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9046419121365066210, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+    type: 3}
+  m_PrefabInstance: {fileID: 9130600082140512892}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1324612975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324612974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 542876e87087fb04d9801fabf6e30471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1362734343
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11321,6 +11351,10 @@ PrefabInstance:
         type: 3}
       insertIndex: 4
       addedObject: {fileID: 9130600082140512900}
+    - targetCorrespondingSourceObject: {fileID: 9046419121365066210, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1324612975}
   m_SourcePrefab: {fileID: 100100000, guid: 4a8bfea8980554d4c9ebd1ab27a59629, type: 3}
 --- !u!114 &9130600082140512893 stripped
 MonoBehaviour:

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PetAnimationController : MonoBehaviour
 {
@@ -16,10 +17,16 @@ public class PetAnimationController : MonoBehaviour
     [SerializeField]
     float pettingLength;
 
+    NavMeshAgent agent;
+    AnimationEventHandler animatorEvent;
+
+    float og_speed;
+
     private void Awake()
     {
-        pet = GetComponent<Pet>();
+        pet = GetComponentInChildren<Pet>();
         animator = pet.GetComponentInChildren<Animator>();
+        animatorEvent = pet.GetComponentInChildren<AnimationEventHandler>();
     }
 
     private void OnEnable()
@@ -27,8 +34,8 @@ public class PetAnimationController : MonoBehaviour
         pet.OnStartEating += EatAnimation;
         pet.OnStopEating += EatingEnd;
         pet.OnPetting += PettingAnimation;
-        pet.MovementController.OnMovementStart += MoveAnimation;
-        pet.MovementController.OnMovementEnd += IdleAnimation;
+        pet.MovementController.OnMovementStart += IdleAnimation;
+        animatorEvent.onAnimationEvent += ModifySpeed;
     }
 
     private void OnDisable()
@@ -36,34 +43,54 @@ public class PetAnimationController : MonoBehaviour
         pet.OnStartEating -= EatAnimation;
         pet.OnStopEating -= EatingEnd;
         pet.OnPetting -= PettingAnimation;
-        pet.MovementController.OnMovementStart -= MoveAnimation;
-        pet.MovementController.OnMovementEnd -= IdleAnimation;
+        pet.MovementController.OnMovementStart -= IdleAnimation;
+        animatorEvent.onAnimationEvent -= ModifySpeed;
+    }
+
+    private void Update()
+    {
+        float currentSpeed = agent.velocity.magnitude;
+        float maxSpeed = agent.speed;
+        animator.SetFloat("Speed", currentSpeed/maxSpeed);
+    }
+
+    private void ModifySpeed(CharacterAnimatorState state)
+    {
+        switch (state)
+        {
+            case CharacterAnimatorState.MOVE:
+                agent.speed = og_speed;
+                break;
+            case CharacterAnimatorState.STOP:
+                agent.speed = 0;
+                break;
+        }
     }
 
     private void Start()
     {
         IdleAnimation();
-        pet = GetComponentInChildren<Pet>();
+        agent = pet.MovementController.Agent;
+        og_speed = pet.MovementController.Agent.speed;
     }
 
     public void IdleAnimation()
     {
         StopAllCoroutines();
         pet.ShouldSearchFood = true;
-        animator.SetInteger("AnimationID", 0);
-    }
-
-    public void MoveAnimation()
-    {
-        StopAllCoroutines();
-        pet.ShouldSearchFood = false;
-        animator.SetInteger("AnimationID", 4);
+        animator.SetBool("Wiggling Tail", false);
+        animator.SetBool("Sitting", false);
+        animator.SetBool("Eating", false);
+        animator.SetBool("Angry", false);
     }
 
     public void EatAnimation()
     {
         StopAllCoroutines();
-        animator.SetInteger("AnimationID", 5);
+        animator.SetBool("Wiggling Tail", false);
+        animator.SetBool("Sitting", false);
+        animator.SetBool("Angry", false);
+        animator.SetBool("Eating", true);
     }
 
     public void EatingEnd()
@@ -78,16 +105,11 @@ public class PetAnimationController : MonoBehaviour
         StartCoroutine(PetAnimationCoroutine());
     }
 
-    public void HappyAnimation()
-    {
-        StopAllCoroutines();
-        animator.SetInteger("AnimationID", 1);
-    }
-
     private IEnumerator EatingEndAnimationCoroutine()
     {
         pet.ShouldSearchFood = false;
-        animator.SetInteger("AnimationID", 1);
+        animator.SetBool("Wiggling Tail", true);
+        animator.SetBool("Eating", false);
         yield return new WaitForSeconds(eatingTransitionLength);
         pet.ShouldSearchFood = true;
         pet?.CheckForFood();
@@ -95,10 +117,14 @@ public class PetAnimationController : MonoBehaviour
 
     private IEnumerator PetAnimationCoroutine()
     {
+        animator.SetBool("Wiggling Tail", false);
+        animator.SetBool("Eating", false);
+        animator.SetBool("Angry", false);
+        animator.SetBool("Eating", false);
         pet.ShouldSearchFood = false;
-        animator.SetInteger("AnimationID", 7);
+        animator.SetBool("Sitting", true);
         yield return new WaitForSeconds(pettingLength);
-        animator.SetInteger("AnimationID", 0);
+        animator.SetBool("Sitting", false);
         yield return new WaitForSeconds(pettingTransitionLength);
         pet.ShouldSearchFood = true;
         pet?.CheckForFood();

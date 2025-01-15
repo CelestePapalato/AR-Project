@@ -18,6 +18,7 @@ public class PetMovement : MonoBehaviour
     float pathBakeRate;
 
     NavMeshAgent agent;
+    public NavMeshAgent Agent { get => agent; }
 
     public event Action OnGoalAccepted;
     public event Action OnGoalReached;
