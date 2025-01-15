@@ -48,8 +48,7 @@ public class PetAnimationController : MonoBehaviour
         agent.speed = og_speed * speedModifier;
 
         float currentSpeed = agent.velocity.magnitude;
-        float maxSpeed = agent.speed;
-        animator.SetFloat("Speed", currentSpeed/maxSpeed);
+        animator.SetFloat("Speed", currentSpeed/og_speed);
     }
 
     private void Start()

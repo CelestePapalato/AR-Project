@@ -33,7 +33,7 @@ public class SurfaceBaker : MonoBehaviour
 
     Dictionary<ARPlane, NavMeshSurface> surfaces = new Dictionary<ARPlane, NavMeshSurface>();
 
-    ARPlane[] toUpdate;
+    ARPlane[] toUpdate = null;
 
     void UpdatePlaneList(ARPlanesChangedEventArgs args)
     {
@@ -63,6 +63,8 @@ public class SurfaceBaker : MonoBehaviour
     [ContextMenu("Bake")]
     public void BakeSurfaces()
     {
+        if(toUpdate == null) { return; }
+
         if(toUpdate.Length > 0)
         {
             foreach (ARPlane plane in toUpdate)

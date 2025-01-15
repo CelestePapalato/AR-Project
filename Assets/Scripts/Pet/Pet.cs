@@ -1,12 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Feedback;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 [RequireComponent(typeof(PetStats))]
@@ -18,6 +14,9 @@ public class Pet : MonoBehaviour
 
     [SerializeField]
     PetSO petData;
+    [SerializeField]
+    float timerForWandering;
+
     public PetSO Data {get => petData; }
     public PetMovement MovementController { get => movement; }
 
@@ -29,6 +28,7 @@ public class Pet : MonoBehaviour
 
     private bool isEating = false;
     private bool isSearchingFood = false;
+    private bool isWandering = false;
 
     public bool ShouldSearchFood = true;
 
@@ -58,6 +58,7 @@ public class Pet : MonoBehaviour
     {
         stats = GetComponent<PetStats>();
         InitializeData();
+        StartWanderingTimer();
     }
 
     private void OnEnable()
@@ -77,6 +78,7 @@ public class Pet : MonoBehaviour
         if (movement)
         {
             movement.OnGoalAccepted += DisableInteractable;
+            movement.OnGoalReached += StartWanderingTimer;
             movement.OnGoalReached += EnableInteractable;
         }
         Food.OnObjectSpawned += MoveTowardsFood;
@@ -96,6 +98,7 @@ public class Pet : MonoBehaviour
         if (movement)
         {
             movement.OnGoalAccepted -= DisableInteractable;
+            movement.OnGoalReached -= StartWanderingTimer;
             movement.OnGoalReached -= EnableInteractable;
         }
         Food.OnObjectSpawned -= MoveTowardsFood;
@@ -148,6 +151,8 @@ public class Pet : MonoBehaviour
         {
             isSearchingFood = true;
             foodFollowing = toEat;
+            CancelInvoke();
+            movement.Stop();
             movement.MoveTowards(toEat.transform);
             foodFollowing.OnFoodDestroyed += OnFoodDeleted;
         }
@@ -182,6 +187,7 @@ public class Pet : MonoBehaviour
     {
         if(isEating) { return; }
         isSearchingFood = false;
+        movement?.Stop();
         movement.MoveTowards(point);
     }
 
@@ -196,6 +202,7 @@ public class Pet : MonoBehaviour
 
     public IEnumerator FeedSequence(Food food)
     {
+        CancelInvoke();
         DisableInteractable();
         movement.Stop();
         isEating = true;
@@ -212,12 +219,15 @@ public class Pet : MonoBehaviour
         Destroy(food.gameObject);
         isEating = false;
         EnableInteractable();
+        StartWanderingTimer();
     }
 
     [ContextMenu("Pet")]
     private void Love(SelectEnterEventArgs xr_event)
     {
-        if(stats.Petting.isMax || isEating) { return; }
+        CancelInvoke();
+        StartWanderingTimer();
+        if (stats.Petting.isMax || isEating) { return; }
         isSearchingFood = false;
         movement.Stop();
         stats.Love.Value += petData.pettingLovePoints;
@@ -252,6 +262,16 @@ public class Pet : MonoBehaviour
                 food.Eat(this);
             }
         }
+    }
+
+    private void StartWanderingTimer()
+    {
+        Invoke(nameof(StartWandering), timerForWandering);
+    }
+
+    private void StartWandering()
+    {
+        movement?.Wander();
     }
 
 }

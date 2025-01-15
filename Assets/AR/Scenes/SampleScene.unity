@@ -11484,6 +11484,11 @@ PrefabInstance:
       propertyPath: pathBakeRate
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 481087848844500404, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+        type: 3}
+      propertyPath: wanderingDirectionUpdateRate
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 489880888574735074, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12888,6 +12893,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -9.081478
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750129540264950214, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+        type: 3}
+      propertyPath: timerForWandering
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750129540264950214, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+        type: 3}
+      propertyPath: wanderingDirectionUpdateRate
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 4802019545235060844, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
         type: 3}
