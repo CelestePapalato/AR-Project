@@ -15,6 +15,12 @@ public class Pet : MonoBehaviour
     [SerializeField]
     PetSO petData;
     [SerializeField]
+    Transform playerTransform;
+
+    [Header("States Configuration")]
+    [SerializeField]
+    float maxDistanceToPlayer = 20f;
+    [SerializeField]
     float timerForWandering;
 
     public PetSO Data {get => petData; }
@@ -160,6 +166,7 @@ public class Pet : MonoBehaviour
 
     private void OnFoodDeleted()
     {
+        foodFollowing.OnFoodDestroyed -= OnFoodDeleted;
         isSearchingFood = false;
         movement.Stop();
         CheckForFood();
@@ -167,7 +174,6 @@ public class Pet : MonoBehaviour
 
     public void CheckForFood()
     {
-        Debug.LogWarning($"{isSearchingFood || !ShouldSearchFood} | {isSearchingFood}, {!ShouldSearchFood}");
         if (isSearchingFood || !ShouldSearchFood) { return; }
         foodFollowing = null;
         if(Food.spawned.Count > 0 )
@@ -216,7 +222,7 @@ public class Pet : MonoBehaviour
         OnFeed?.Invoke(food.Data.FeedPoints);
         OnWater?.Invoke(food.Data.WaterPoints);
         OnLove?.Invoke(food.Data.LovePoints);
-        Destroy(food.gameObject);
+        food.DestroyWithNotify();
         isEating = false;
         EnableInteractable();
         StartWanderingTimer();

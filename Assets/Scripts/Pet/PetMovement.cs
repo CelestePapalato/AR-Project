@@ -181,8 +181,6 @@ public class PetMovement : MonoBehaviour
 
         OnMovementStart?.Invoke();
 
-        Debug.Log(agent.transform.forward * speed + " | " + agent.velocity);
-
         while (agent.enabled && isWandering)
         {
             t_velocity -= Time.deltaTime;

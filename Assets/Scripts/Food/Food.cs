@@ -71,8 +71,14 @@ public class Food : MonoBehaviour
     private void OnDestroy()
     {
         spawned.Remove(this);
-        OnFoodDestroyed?.Invoke();
         OnFoodDestroyed = null;
+    }
+
+    public void DestroyWithNotify()
+    {
+        spawned.Remove(this);
+        OnFoodDestroyed?.Invoke();
+        Destroy(gameObject);
     }
 
     public void InitializeData(FoodSO food)
