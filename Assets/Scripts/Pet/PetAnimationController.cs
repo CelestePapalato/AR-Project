@@ -83,7 +83,6 @@ public class PetAnimationController : MonoBehaviour
         animator.SetBool("Wiggling Tail", true);
         animator.SetBool("Eating", false);
         pet.ShouldSearchFood = true;
-        pet?.CheckForFood();
     }
 
     public void PettingAnimation()
@@ -103,6 +102,7 @@ public class PetAnimationController : MonoBehaviour
         yield return new WaitForSeconds(pettingLength);
         animator.SetBool("Sitting", false);
         pet.ShouldSearchFood = true;
+        yield return null;
         pet?.CheckForFood();
     }
 }

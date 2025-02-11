@@ -181,6 +181,7 @@ public class Pet : MonoBehaviour
     {
         if (isAwayFromPlayer())
         {
+            ShouldSearchFood = false;
             CancelInvoke();
             StopAllCoroutines();
             Food.DestroyAllInstances();
@@ -196,7 +197,11 @@ public class Pet : MonoBehaviour
 
     private void FollowState()
     {
-        if (DistanceToPlayer() <= GetPlayerHeight() * 1.2f) { UpdateState(STATE.IDLE); }
+        if (DistanceToPlayer() <= GetPlayerHeight() * 1.2f)
+        {
+            ShouldSearchFood = true;
+            UpdateState(STATE.IDLE);
+        }
     }
 
     private void Update()
@@ -238,15 +243,17 @@ public class Pet : MonoBehaviour
 
     private void OnFoodDeleted()
     {
-        foodFollowing.OnFoodDestroyed -= OnFoodDeleted;
         isSearchingFood = false;
         movement.Stop();
+        foodFollowing = null;
         CheckForFood();
     }
 
     public void CheckForFood()
     {
-        if (isSearchingFood || !ShouldSearchFood) { UpdateState(STATE.IDLE); return; }
+        Debug.Log(state);
+        if (isSearchingFood || !ShouldSearchFood)
+        { return; }
         foodFollowing = null;
         if(Food.spawned.Count > 0 )
         {
@@ -295,18 +302,16 @@ public class Pet : MonoBehaviour
         OnFeed?.Invoke(food.Data.FeedPoints);
         OnWater?.Invoke(food.Data.WaterPoints);
         OnLove?.Invoke(food.Data.LovePoints);
-        food.DestroyWithNotify();
         isEating = false;
         EnableInteractable();
         UpdateState(STATE.IDLE);
-        StartWanderingTimer();
+        food.DestroyWithNotify();
     }
 
     [ContextMenu("Pet")]
     private void Love(SelectEnterEventArgs xr_event)
     {
-        CancelInvoke();
-        StartWanderingTimer();
+        state = STATE.IDLE;
         if (stats.Petting.isMax || isEating) { return; }
         isSearchingFood = false;
         movement.Stop();
@@ -369,7 +374,6 @@ public class Pet : MonoBehaviour
 
     private float GetPlayerHeight()
     {
-        Debug.Log(Mathf.Abs(playerTransform.transform.position.y - movement.transform.position.y));
         return Mathf.Abs(playerTransform.transform.position.y - movement.transform.position.y);
     }
 }

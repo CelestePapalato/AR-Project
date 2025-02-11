@@ -78,6 +78,7 @@ public class Food : MonoBehaviour
     {
         spawned.Remove(this);
         OnFoodDestroyed?.Invoke();
+        OnFoodDestroyed = null;
         Destroy(gameObject);
     }
 
