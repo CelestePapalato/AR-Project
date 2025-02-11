@@ -12,16 +12,26 @@ public class Pet : MonoBehaviour
 {
     public static Pet CurrentPet;
 
+    public enum STATE { IDLE, SEARCHING_FOOD, FOLLOWING, WANDERING, EATING }
+
+    [Header("DEBUG")]
+    [SerializeField]
+    private STATE state = STATE.IDLE;
+
     [SerializeField]
     PetSO petData;
     [SerializeField]
     Transform playerTransform;
 
     [Header("States Configuration")]
+    [Header("Player Following")]
     [SerializeField]
-    float maxDistanceToPlayer = 20f;
+    [Range(1.2f, 5f)] float maxDistanceToPlayer = 2f;
+    [Header("Wander State")]
     [SerializeField]
-    float timerForWandering;
+    float minTimerForWandering;
+    [SerializeField]
+    float maxTimerForWandering;
 
     public PetSO Data {get => petData; }
     public PetMovement MovementController { get => movement; }
@@ -65,6 +75,7 @@ public class Pet : MonoBehaviour
         stats = GetComponent<PetStats>();
         InitializeData();
         StartWanderingTimer();
+        state = STATE.IDLE;
     }
 
     private void OnEnable()
@@ -139,6 +150,66 @@ public class Pet : MonoBehaviour
         XR_interactable.enabled = true;
     }
 
+    private void UpdateState(STATE newState)
+    {
+        if(newState == state) { return; }
+        state = newState;
+        switch (state)
+        {
+            case STATE.SEARCHING_FOOD: break;
+            case STATE.FOLLOWING:
+                StartFollowingState();
+                break;
+            case STATE.WANDERING:
+                movement?.Wander(); 
+                break;
+            case STATE.EATING: break;
+            case STATE.IDLE:
+                StartIdleState();
+                break;
+        }
+    }
+
+    private void StartIdleState()
+    {
+        movement?.Stop();
+        CancelInvoke();
+        StartWanderingTimer();
+    }
+
+    private void CheckDistanceToPlayer()
+    {
+        if (isAwayFromPlayer())
+        {
+            CancelInvoke();
+            StopAllCoroutines();
+            Food.DestroyAllInstances();
+            UpdateState(STATE.FOLLOWING);
+        }
+    }
+
+    private void StartFollowingState()
+    {
+        movement?.Stop();
+        movement?.MoveTowards(playerTransform.transform);
+    }
+
+    private void FollowState()
+    {
+        if (DistanceToPlayer() <= GetPlayerHeight() * 1.2f) { UpdateState(STATE.IDLE); }
+    }
+
+    private void Update()
+    {
+        switch (state)
+        {
+            case STATE.FOLLOWING:
+                FollowState(); break;
+            default:
+                CheckDistanceToPlayer(); break;
+        }
+    }
+
     public void MoveTowardsFood()
     {
         if (isSearchingFood || !ShouldSearchFood) { return; }
@@ -155,11 +226,12 @@ public class Pet : MonoBehaviour
 
         if (toEat)
         {
+            movement.Stop();
             isSearchingFood = true;
             foodFollowing = toEat;
             CancelInvoke();
-            movement.Stop();
             movement.MoveTowards(toEat.transform);
+            UpdateState(STATE.SEARCHING_FOOD);
             foodFollowing.OnFoodDestroyed += OnFoodDeleted;
         }
     }
@@ -174,7 +246,7 @@ public class Pet : MonoBehaviour
 
     public void CheckForFood()
     {
-        if (isSearchingFood || !ShouldSearchFood) { return; }
+        if (isSearchingFood || !ShouldSearchFood) { UpdateState(STATE.IDLE); return; }
         foodFollowing = null;
         if(Food.spawned.Count > 0 )
         {
@@ -208,6 +280,7 @@ public class Pet : MonoBehaviour
 
     public IEnumerator FeedSequence(Food food)
     {
+        UpdateState(STATE.EATING);
         CancelInvoke();
         DisableInteractable();
         movement.Stop();
@@ -225,6 +298,7 @@ public class Pet : MonoBehaviour
         food.DestroyWithNotify();
         isEating = false;
         EnableInteractable();
+        UpdateState(STATE.IDLE);
         StartWanderingTimer();
     }
 
@@ -272,12 +346,30 @@ public class Pet : MonoBehaviour
 
     private void StartWanderingTimer()
     {
-        Invoke(nameof(StartWandering), timerForWandering);
+        float timer = Random.Range(minTimerForWandering, maxTimerForWandering);
+        Invoke(nameof(StartWandering), minTimerForWandering);
     }
 
     private void StartWandering()
     {
-        movement?.Wander();
+        UpdateState(STATE.WANDERING);
     }
 
+    private bool isAwayFromPlayer()
+    {
+        float distance = DistanceToPlayer();
+        float playerDistanceThreshold = Mathf.Sqrt(Mathf.Pow(maxDistanceToPlayer, 2) + Mathf.Pow(GetPlayerHeight(), 2));
+        return distance >= playerDistanceThreshold;
+    }
+
+    private float DistanceToPlayer()
+    {
+        return Vector3.Distance(playerTransform.transform.position, movement.transform.position);
+    }
+
+    private float GetPlayerHeight()
+    {
+        Debug.Log(Mathf.Abs(playerTransform.transform.position.y - movement.transform.position.y));
+        return Mathf.Abs(playerTransform.transform.position.y - movement.transform.position.y);
+    }
 }

@@ -112,4 +112,12 @@ public class Food : MonoBehaviour
         transform.localScale = Pet.CurrentPet.transform.localScale;
     }
 
+    public static void DestroyAllInstances()
+    {
+        Food[] instances = spawned.ToArray();
+        foreach(Food food in instances)
+        {
+            food.DestroyWithNotify();
+        }
+    }
 }

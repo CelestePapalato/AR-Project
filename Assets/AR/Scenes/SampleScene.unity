@@ -1226,7 +1226,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &281835268
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4185,7 +4185,7 @@ RectTransform:
   m_Father: {fileID: 446240747}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6124,6 +6124,12 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!4 &1276453634 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7594110857798696020, guid: 55644a192a5e1344eacd3738ddba0df4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1810002740107021939}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1306100196
 GameObject:
   m_ObjectHideFlags: 0
@@ -11487,7 +11493,7 @@ PrefabInstance:
     - target: {fileID: 481087848844500404, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
         type: 3}
       propertyPath: wanderingDirectionUpdateRate
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 489880888574735074, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
         type: 3}
@@ -12896,7 +12902,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4750129540264950214, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
         type: 3}
+      propertyPath: playerTracker
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750129540264950214, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+        type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 1276453634}
+    - target: {fileID: 4750129540264950214, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+        type: 3}
       propertyPath: timerForWandering
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750129540264950214, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+        type: 3}
+      propertyPath: maxDistanceToPlayer
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750129540264950214, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+        type: 3}
+      propertyPath: maxTimerForWandering
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750129540264950214, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+        type: 3}
+      propertyPath: minTimerForWandering
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4750129540264950214, guid: 4a8bfea8980554d4c9ebd1ab27a59629,

@@ -27,8 +27,6 @@ public class PetMovement : MonoBehaviour
     public event Action OnMovementStart;
     public event Action OnMovementEnd;
 
-    private Coroutine currentCoroutine;
-
     bool isWandering = false;
     float maxSpeed = 1f;
 
@@ -42,30 +40,27 @@ public class PetMovement : MonoBehaviour
     public void MoveTowards(Vector3 point)
     {
         isWandering = false;
-        if (currentCoroutine != null) { StopCoroutine(currentCoroutine); }
+        StopAllCoroutines();
         NavMeshPath path = new NavMeshPath();
         agent.enabled = true;
         agent.destination = agent.transform.position;
-        currentCoroutine = StartCoroutine(GoToPoint(point));
+        StartCoroutine(GoToPoint(point));
     }
 
     public void MoveTowards(Transform transform)
     {
         isWandering = false;
-        if (currentCoroutine != null) { StopCoroutine(currentCoroutine); }
+        StopAllCoroutines();
         NavMeshPath path = new NavMeshPath();
         agent.enabled = true;
         agent.destination = agent.transform.position;
-        currentCoroutine = StartCoroutine(Follow(transform));
+        StartCoroutine(Follow(transform));
     }
 
     public void Stop()
     {
         isWandering = false;
-        if (currentCoroutine != null)
-        {
-            StopCoroutine(currentCoroutine);
-        }
+        StopAllCoroutines();
         agent.enabled = false;
     }
 
@@ -151,16 +146,16 @@ public class PetMovement : MonoBehaviour
 
     public void Wander()
     {
-        if (currentCoroutine != null) { StopCoroutine(currentCoroutine); }
+        StopAllCoroutines();
         agent.enabled = true;
-        currentCoroutine = StartCoroutine(WanderCoroutine());
+        StartCoroutine(WanderCoroutine());
     }
 
     IEnumerator WanderCoroutine()
     {
         isWandering = true;
 
-        float speed = maxSpeed * 0.6f;
+        float speed = maxSpeed * 0.3f;
 
         SurfaceBaker.Instance?.BakeSurfaces();
 
@@ -187,9 +182,10 @@ public class PetMovement : MonoBehaviour
             if (t_velocity <= 0f)
             {
                 velocity = UnityEngine.Random.onUnitSphere;
-                velocity.z = 0;
+                velocity.y = 0;
                 velocity.Normalize();
-                t_velocity = wanderingDirectionUpdateRate;
+                //t_velocity = wanderingDirectionUpdateRate; 
+                t_velocity = UnityEngine.Random.Range(wanderingDirectionUpdateRate - 2.5f, wanderingDirectionUpdateRate + 2.5f);
                 desired_velocity = velocity * speed;
             }
             Vector3 current = agent.velocity;
@@ -205,6 +201,5 @@ public class PetMovement : MonoBehaviour
         isWandering = false;
         agent.enabled = false;
         OnMovementEnd?.Invoke();
-        currentCoroutine = null;
     }
 }
