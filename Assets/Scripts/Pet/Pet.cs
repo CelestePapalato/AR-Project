@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
@@ -21,6 +22,7 @@ public class Pet : MonoBehaviour
     [SerializeField]
     PetSO petData;
     [SerializeField]
+    ARCameraManager cameraManager;
     Transform playerTransform;
 
     [Header("States Configuration")]
@@ -72,6 +74,7 @@ public class Pet : MonoBehaviour
 
     private void Start()
     {
+        playerTransform = cameraManager.transform;
         stats = GetComponent<PetStats>();
         InitializeData();
         StartWanderingTimer();
@@ -191,8 +194,16 @@ public class Pet : MonoBehaviour
 
     private void StartFollowingState()
     {
+        if (isEating && foodFollowing)
+        {
+            foodFollowing.OnFoodDestroyed -= OnFoodDeleted;
+            Destroy(foodFollowing.gameObject);
+            foodFollowing = null;
+        }
+        isEating = false;
+        isSearchingFood = false;
         movement?.Stop();
-        movement?.MoveTowards(playerTransform.transform);
+        movement?.NoWarpMoveTowards(playerTransform.transform);
     }
 
     private void FollowState()
@@ -272,6 +283,8 @@ public class Pet : MonoBehaviour
     {
         if(isEating) { return; }
         isSearchingFood = false;
+        UpdateState(STATE.IDLE);
+        CancelInvoke();
         movement?.Stop();
         movement.MoveTowards(point);
     }

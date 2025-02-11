@@ -10974,6 +10974,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1810002740107021939}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1276453638 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1759504388095935967, guid: 55644a192a5e1344eacd3738ddba0df4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1810002740107021939}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4966719baa26e4b0e8231a24d9bd491a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1306100196
 GameObject:
   m_ObjectHideFlags: 0
@@ -17744,6 +17756,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -9.081478
       objectReference: {fileID: 0}
+    - target: {fileID: 4750129540264950214, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
+        type: 3}
+      propertyPath: cameraManager
+      value: 
+      objectReference: {fileID: 1276453638}
     - target: {fileID: 4750129540264950214, guid: 4a8bfea8980554d4c9ebd1ab27a59629,
         type: 3}
       propertyPath: playerTracker

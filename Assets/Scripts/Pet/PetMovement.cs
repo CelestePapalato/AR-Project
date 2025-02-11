@@ -54,7 +54,17 @@ public class PetMovement : MonoBehaviour
         NavMeshPath path = new NavMeshPath();
         agent.enabled = true;
         agent.destination = agent.transform.position;
-        StartCoroutine(Follow(transform));
+        StartCoroutine(Follow(transform, true));
+    }
+
+    public void NoWarpMoveTowards(Transform transform)
+    {
+        isWandering = false;
+        StopAllCoroutines();
+        NavMeshPath path = new NavMeshPath();
+        agent.enabled = true;
+        agent.destination = agent.transform.position;
+        StartCoroutine(Follow(transform, false));
     }
 
     public void Stop()
@@ -107,7 +117,7 @@ public class PetMovement : MonoBehaviour
         OnMovementEnd?.Invoke();
     }
 
-    IEnumerator Follow(Transform objective)
+    IEnumerator Follow(Transform objective, bool warp)
     {
         if (!objective) { yield break; }
         while (agent.enabled && objective)
@@ -128,7 +138,7 @@ public class PetMovement : MonoBehaviour
                 yield return new WaitForSeconds(checkRate);
             }
 
-            if (agent.pathStatus != NavMeshPathStatus.PathComplete)
+            if (agent.pathStatus != NavMeshPathStatus.PathComplete && warp)
             {
                 agent.Warp(objective.position);
                 agent.enabled = false;
