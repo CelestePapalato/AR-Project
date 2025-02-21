@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{ABE68FCB-67D2-43C1-B96C-08C7431F7387}" SchemaVersion="123">
+	<AudioObjects>
+		<WorkUnit Name="Default Work Unit" ID="{ABE68FCB-67D2-43C1-B96C-08C7431F7387}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="EDIT Perro-ladrido" ID="{35749AD2-9279-4DFA-9A08-CC8656472810}" ShortID="1003636993">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{E456D9CB-137B-43CC-916E-0F857BD6180D}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{0DFC85EA-06BB-4DB9-98AF-3A0E6E71C517}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="EDIT Perro-ladrido" ID="{2BD3F7A8-56DD-43A4-A73D-6B92D0C48A41}">
+							<Language>SFX</Language>
+							<AudioFile>EDIT Perro-ladrido.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="446868644"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="EDIT Perro-ladrido" ID="{2BD3F7A8-56DD-43A4-A73D-6B92D0C48A41}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<RandomSequenceContainer Name="NoSe" ID="{4F8BFD17-0809-451C-B70E-A348772F64FF}" ShortID="978694473">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{E456D9CB-137B-43CC-916E-0F857BD6180D}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{0DFC85EA-06BB-4DB9-98AF-3A0E6E71C517}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="EDIT no se 1" ID="{D9A1A255-99D7-41F2-AA92-FE000C0348F7}" ShortID="908221023">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{E456D9CB-137B-43CC-916E-0F857BD6180D}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{0DFC85EA-06BB-4DB9-98AF-3A0E6E71C517}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="EDIT no se 1" ID="{B29C6F9F-C052-4A40-8026-0767A7D47CA4}">
+									<Language>SFX</Language>
+									<AudioFile>EDIT no se 1.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="175965921"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="EDIT no se 1" ID="{B29C6F9F-C052-4A40-8026-0767A7D47CA4}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="EDIT no se 2" ID="{8D4CB374-E741-4F35-8886-2BAB4429B4CF}" ShortID="515207014">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{E456D9CB-137B-43CC-916E-0F857BD6180D}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{0DFC85EA-06BB-4DB9-98AF-3A0E6E71C517}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="EDIT no se 2" ID="{0E8824C4-2DCA-4169-9CF7-B524FCB443B4}">
+									<Language>SFX</Language>
+									<AudioFile>EDIT no se 2.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="363092434"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="EDIT no se 2" ID="{0E8824C4-2DCA-4169-9CF7-B524FCB443B4}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</RandomSequenceContainer>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

@@ -27,17 +27,17 @@ public class PetAnimationController : MonoBehaviour
 
     private void OnEnable()
     {
-        pet.OnStartEating += EatAnimation;
-        pet.OnStopEating += EatingEnd;
-        pet.OnPetting += PettingAnimation;
+        pet.OnStartEating.AddListener(EatAnimation);
+        pet.OnStopEating.AddListener(EatingEnd);
+        pet.OnPetting.AddListener(PettingAnimation);
         pet.MovementController.OnMovementStart += IdleAnimation;
     }
 
     private void OnDisable()
     {
-        pet.OnStartEating -= EatAnimation;
-        pet.OnStopEating -= EatingEnd;
-        pet.OnPetting -= PettingAnimation;
+        pet.OnStartEating?.RemoveListener(EatAnimation);
+        pet.OnStopEating?.RemoveListener(EatingEnd);
+        pet.OnPetting?.RemoveListener(PettingAnimation);
         pet.MovementController.OnMovementStart -= IdleAnimation;
     }
 

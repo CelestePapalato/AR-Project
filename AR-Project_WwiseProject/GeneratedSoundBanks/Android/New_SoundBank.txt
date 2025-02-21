@@ -1,0 +1,9 @@
+Event	ID	Name			Wwise Object Path	Notes
+	1792932691	FoodFound			\Default Work Unit\FoodFound	
+	3248370325	OnPet			\Default Work Unit\OnPet	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	175965921	EDIT no se 1	C:\UAI\Simuladores\AR-Project\AR-Project_WwiseProject\.cache\5A\{5A6DF9D7-91FB-6FB0-BF8B-64C5BA9E2A0F}.wem		\Actor-Mixer Hierarchy\Default Work Unit\NoSe\EDIT no se 1		124058
+	363092434	EDIT no se 2	C:\UAI\Simuladores\AR-Project\AR-Project_WwiseProject\.cache\3B\{3BC0E3CF-AEA7-6B0D-CC2F-FBB5E27CF14B}.wem		\Actor-Mixer Hierarchy\Default Work Unit\NoSe\EDIT no se 2		56432
+	446868644	EDIT Perro-ladrido	C:\UAI\Simuladores\AR-Project\AR-Project_WwiseProject\.cache\C2\{C2EC1383-84D4-4AEA-CE2D-EBFD1B45A161}.wem		\Actor-Mixer Hierarchy\Default Work Unit\EDIT Perro-ladrido		56636
+

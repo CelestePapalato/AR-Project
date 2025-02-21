@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{713EB142-6544-4333-816D-BAAD6F4C505D}" SchemaVersion="123">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{713EB142-6544-4333-816D-BAAD6F4C505D}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="FoodFound" ID="{18AE2635-102A-41DC-B741-6241462E9DDD}">
+					<ChildrenList>
+						<Action Name="" ID="{F6F128B1-CF64-4138-9CF7-3B12C0E796CF}" ShortID="845588559">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="EDIT Perro-ladrido" ID="{35749AD2-9279-4DFA-9A08-CC8656472810}" WorkUnitID="{ABE68FCB-67D2-43C1-B96C-08C7431F7387}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="OnPet" ID="{4126DB14-8324-4C3D-BAFB-3A4E3727D114}">
+					<ChildrenList>
+						<Action Name="" ID="{B13D55D7-3CEB-48C2-BBAD-DC69664DC1F5}" ShortID="208814643">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="NoSe" ID="{4F8BFD17-0809-451C-B70E-A348772F64FF}" WorkUnitID="{ABE68FCB-67D2-43C1-B96C-08C7431F7387}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

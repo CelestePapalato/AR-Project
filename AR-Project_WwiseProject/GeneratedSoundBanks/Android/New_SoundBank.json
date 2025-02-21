@@ -1,0 +1,80 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Android",
+  "BasePlatform": "Android",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "4072029455",
+    "Type": "User",
+    "GUID": "{928E0218-2EE6-4846-AB13-15891F018D9A}",
+    "Language": "SFX",
+    "Hash": "{D96C477E-5F97-35C0-997A-F73C05220425}",
+    "ObjectPath": "\\SoundBanks\\Default Work Unit\\New_SoundBank",
+    "ShortName": "New_SoundBank",
+    "Path": "New_SoundBank.bnk",
+    "Media": [
+     {
+      "Id": "175965921",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "EDIT no se 1.wav",
+      "CachePath": "5A/{5A6DF9D7-91FB-6FB0-BF8B-64C5BA9E2A0F}.wem"
+     },
+     {
+      "Id": "363092434",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "EDIT no se 2.wav",
+      "CachePath": "3B/{3BC0E3CF-AEA7-6B0D-CC2F-FBB5E27CF14B}.wem"
+     },
+     {
+      "Id": "446868644",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "EDIT Perro-ladrido.wav",
+      "CachePath": "C2/{C2EC1383-84D4-4AEA-CE2D-EBFD1B45A161}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1792932691",
+      "Name": "FoodFound",
+      "ObjectPath": "\\Events\\Default Work Unit\\FoodFound",
+      "GUID": "{18AE2635-102A-41DC-B741-6241462E9DDD}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.64104307",
+      "DurationMax": "0.64104307",
+      "MediaRefs": [
+       {
+        "Id": "446868644"
+       }
+      ]
+     },
+     {
+      "Id": "3248370325",
+      "Name": "OnPet",
+      "ObjectPath": "\\Events\\Default Work Unit\\OnPet",
+      "GUID": "{4126DB14-8324-4C3D-BAFB-3A4E3727D114}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.63873017",
+      "DurationMax": "1.4054649",
+      "MediaRefs": [
+       {
+        "Id": "175965921"
+       },
+       {
+        "Id": "363092434"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{4BF0DA8A-6F3D-A914-9AD4-D265ECE98CCA}"
+ }
+}

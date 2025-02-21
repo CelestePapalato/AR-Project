@@ -56,9 +56,10 @@ public class Pet : MonoBehaviour
     public UnityAction<int> OnPet;
     public UnityAction<Vector3> OnSizeChange;
 
-    public UnityAction OnStartEating;
-    public UnityAction OnStopEating;
-    public UnityAction OnPetting;
+    public UnityEvent OnFoodFound;
+    public UnityEvent OnStartEating;
+    public UnityEvent OnStopEating;
+    public UnityEvent OnPetting;
 
     private Food foodFollowing;
 
@@ -159,7 +160,9 @@ public class Pet : MonoBehaviour
         state = newState;
         switch (state)
         {
-            case STATE.SEARCHING_FOOD: break;
+            case STATE.SEARCHING_FOOD:
+                OnFoodFound?.Invoke();
+                break;
             case STATE.FOLLOWING:
                 StartFollowingState();
                 break;
